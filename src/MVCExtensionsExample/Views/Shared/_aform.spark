@@ -1,0 +1,5 @@
+<viewdata a="MvcExtensions.Model.VMActionLink" />
+<form action="${Url.ActionLink(a)}" method="post">
+<render />
+<button type="submit">${a.Description}</button>
+</form>

@@ -66,6 +66,8 @@
   <ItemGroup>
     <Content Include="lib\Microsoft.Web.Mvc.dll" />
     <Content Include="lib\MvcContrib.dll" />
+    <Content Include="lib\Spark.dll" />
+    <Content Include="lib\Spark.Web.Mvc.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

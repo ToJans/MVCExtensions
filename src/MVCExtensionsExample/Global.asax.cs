@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Spark.Web.Mvc;
 
 namespace MVCExtensionsExample
 {
@@ -29,6 +30,8 @@ namespace MVCExtensionsExample
             RegisterRoutes(RouteTable.Routes);
             ControllerBuilder.Current.DefaultNamespaces.Add(
                 typeof(Tasks.Core.Controllers.TaskController).Namespace);
+            ViewEngines.Engines.Add(new SparkViewFactory());
+            
         }
     }
 }

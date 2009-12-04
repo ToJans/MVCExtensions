@@ -9,8 +9,8 @@ namespace Tasks.Core.ViewModel.Tasks
 {
     public class VMIndex
     {
-        public IEnumerable<Task> AllTasks;
-        public Task SelectedTask;
-        public VMActionLink AL_AddTask;
+        public IEnumerable<Task> AllTasks {get;set;}
+        public Task SelectedTask { get; set; }
+        public VMActionLink AL_AddTask { get; set; }
     }
 }
