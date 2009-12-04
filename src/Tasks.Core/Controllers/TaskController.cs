@@ -22,12 +22,11 @@ namespace Tasks.Core.Controllers
 
         public ActionResult Index()
         {
-            ViewData.Model = new VMIndex()
+            return View(new VMIndex()
             {
                 AllTasks = rTask.Find.OrderBy(o => o.Name),
                 AL_AddTask = this.ActionLink("Add new task",c=>c.AddNewTask(null,null))
-            };
-            return View();
+            });
         }
 
         public ActionResult AddNewTask(string name,string description)
@@ -48,14 +47,13 @@ namespace Tasks.Core.Controllers
         public ActionResult Edit(int id)
         {
             var t = rTask.GetById(id);
-            ViewData.Model = new VMEdit()
+            return View(new VMEdit()
             {
                  Name = t.Name,
                  Description = t.Description,
                  AL_PostEdit = this.ActionLink("Save changes",c=>c.PostEdit(t.Id,null,null)),
                  AL_CancelEdit = this.ActionLink("Cancel changes",c=>c.Index())
-            };
-            return View();
+            });
         }
 
         public ActionResult PostEdit(int id,string name,string description)
@@ -72,6 +70,5 @@ namespace Tasks.Core.Controllers
             rTask.Delete(rTask.GetById(id));
             return this.RedirectToAction(c => c.Index());
         }
-    
     }
 }
