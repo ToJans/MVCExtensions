@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Spark.Web.Mvc;
 
-namespace MVCExtensionsExample
+namespace Tasks.MVCApp
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
@@ -20,7 +20,7 @@ namespace MVCExtensionsExample
             routes.MapRoute(
                 "Default",                                              // Route name
                 "{controller}/{action}/{id}",                           // URL with parameters
-                new { controller = "Task", action = "Index", id = "" }  // Parameter defaults
+                new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
             );
 
         }
@@ -28,8 +28,7 @@ namespace MVCExtensionsExample
         protected void Application_Start()
         {
             RegisterRoutes(RouteTable.Routes);
-            ControllerBuilder.Current.DefaultNamespaces.Add(
-                typeof(Tasks.Core.Controllers.TaskController).Namespace);
+            ControllerBuilder.Current.DefaultNamespaces.Add("Tasks.Core.Controllers");
             ViewEngines.Engines.Add(new SparkViewFactory());
             
         }

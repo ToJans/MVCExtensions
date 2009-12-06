@@ -1,11 +1,11 @@
-<viewdata model="Tasks.Core.ViewModel.Tasks.VMIndex" />
+<viewdata model="Tasks.ViewModel.Home.VMIndex" />
 <content name="Title">
     Index
 </content>
 
 <content name="Main">
 <h1>Task list</h1>
-<if condition="Model.AllTasks.Count()==0">
+<if condition="Model.HasNoTasks">
     No tasks yet.
 </if>
 <else>
@@ -20,9 +20,9 @@
     <tr each="var t in Model.AllTasks">
         <td>${t.Name}</td>
         <td>${t.Description}</td>
-        <td><alink a="t.AL_Status()" /></td>
-        <td><alink a="t.AL_Edit()" /> </td>
-        <td><alink a="t.AL_Delete()" /> </td>
+        <td><alink a="t.AL_Status" /></td>
+        <td><alink a="t.AL_Edit" /> </td>
+        <td><alink a="t.AL_Delete" /> </td>
     </tr>
   </table>
 </else>

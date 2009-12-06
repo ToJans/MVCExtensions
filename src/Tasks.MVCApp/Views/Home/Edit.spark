@@ -1,4 +1,4 @@
-<viewdata model="Tasks.Core.ViewModel.Tasks.VMEdit" />
+<viewdata model="Tasks.ViewModel.Home.VMEdit" />
 
 <content name="Title">
     Edit

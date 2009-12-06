@@ -11,7 +11,7 @@ namespace MvcExtensions.Controller
 
     public static class IControllerExtensions
     {
-        public static VMActionLink ActionLink<TController>(this TController controller, string description
+        public static VMActionLink AL<TController>(this TController controller, string description
         , Expression<Func<TController, ActionResult>> ActionExpression)
         where TController : IController
         {

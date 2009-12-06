@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FACBB884-EEE4-4B98-AD5A-FA4D7E7CE11A}</ProjectGuid>
+    <ProjectGuid>{2E1F0D3B-BAE0-46DA-A660-901042052862}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tasks.Core</RootNamespace>
-    <AssemblyName>Tasks.Core</AssemblyName>
+    <RootNamespace>Tasks.ViewModel</RootNamespace>
+    <AssemblyName>Tasks.ViewModel</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,12 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MvcContrib, Version=2.0.9.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -47,28 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Interfaces\IModelId.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Model\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\FakeRepository.cs" />
+    <Compile Include="Home\VMEdit.cs" />
+    <Compile Include="Home\VMIndex.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvcExtensions\MvcExtensions.csproj">
       <Project>{77ED8A2E-2E20-4AE7-AECA-9782FB83B951}</Project>
       <Name>MvcExtensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tasks.ViewModels\Tasks.ViewModel.csproj">
-      <Project>{2E1F0D3B-BAE0-46DA-A660-901042052862}</Project>
-      <Name>Tasks.ViewModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="lib\Microsoft.Web.Mvc.dll" />
-    <Content Include="lib\MvcContrib.dll" />
-    <Content Include="lib\Spark.dll" />
-    <Content Include="lib\Spark.Web.Mvc.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

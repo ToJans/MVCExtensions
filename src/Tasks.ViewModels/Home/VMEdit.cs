@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Tasks.Core.Model;
 using MvcExtensions.Model;
 
-namespace Tasks.Core.ViewModel.Tasks
+namespace Tasks.ViewModel.Home
 {
     public class VMEdit
     {
