@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Tasks.Core.Interfaces;
 
-namespace Tasks.Core.Services
+namespace Tasks.Core.Services.Impl
 {
     public class FakeRepository<T> : IRepository<T> where T:IModelId 
     {

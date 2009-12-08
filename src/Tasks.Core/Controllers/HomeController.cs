@@ -1,67 +1,69 @@
-﻿// For a while I have been looking for the perfect ASP.Net MVC code.
+﻿// The quest for perfect asp.net MVC code - v0.3
+//
+// For a while I have been looking for the perfect ASP.Net MVC code.
 // This is the cleanest code I have been able to write.
 // I would like to challenge everyone to do better !!!
-//
+// 
 // By this I mean creating a better controller/views if possible codewise.
 // The focus is not on the layout stuff, but having it might be a plus.
 //
 // The scope : a very rudimentary Task list (KISS)
 //
-// Some more info about my approach :
-// It uses view models which contain both data and ActionLink references
-// (like ICommand in WPF M-V-VM )
+// You can download the full source here using (msys)git:
+//     http://github.com/ToJans/MVCExtensions
 //
-// You can download the full source here :
-//     http://github.com/ToJans/MVCExtensions/tree/master/src/
-//
-// You will see it is very easy to alter, just download it and press F5
+// You will see it is very easy to alter, just fetch it with git and press F5
 //
 // Please do let me know what you think about my approach as well,
 // and whether you could do better: ToJans@twitter
 // Send this link to as much fellow coders as possible, so we can see lots of alternatives
 //
-// PS: you can also leave a comment @ my website (look at my twitter account)
-
-
+// PS: you can also leave a comment @ my website (look at my twitter account for the url)
+//
+// Edit: this is my third version, and I am still looking for improvements
+//
+// Some noteworthy facts :
+// - In the MVCapp, there only DLL directly referenced is the ViewModel DLL, 
+//   so the views do NOT reference the controllers anywhere
+// - The controller contains only logic & domain model objects => VERY CLEAN Controller
+// - The resulting controller action model is mapped to the ViewModel using 
+//   IMapper.Map<source,ViewModel>(s,vm)
+// - The viewmodel should include everything that should be visible on the screen, so not only
+//   data but also the actionlinks one can use
+// - The actionlinks for the viewpages are defined in the IMapper, and automaticly passed on to
+//   the view => you can see/alter the program flow in the mapping definitions
+// - Stubbing the controller should be a piece of cake using this code, so you could use this
+//   design to easily develop application mockups that are ready to be implemented once the client 
+//   approves, so first build your viewmodels and views, show it to the client, and upon agreement
+//   start development on the controller.... In fact I am going to test this method on my next project
+//
+// Kind regards,
+// Tom Janssens
+//
 using System.Linq;
 using System.Web.Mvc;
-
 using MvcContrib;
-using MvcExtensions.Controller;
-using MvcExtensions.Model;
-
 using Tasks.Core.Model;
 using Tasks.Core.Services;
 using Tasks.ViewModel.Home;
-using Tasks.Core.Interfaces;
+using Tasks.Core.Services.Impl;
 
 namespace Tasks.Core.Controllers
 {
     public class HomeController : Controller
     {
-        // for the sake of the demo we do not use DI 
-        // but just a static class instance here with a fake repo
+        // for the sake of the demo we do not use DI but static instances
         static IRepository<Task> rTask = rTask ?? new FakeRepository<Task>(null);
+        static IMapper sMapper = sMapper ?? new Mapper();
 
         public ActionResult Index()
         {
-            return View(new VMIndex()
-            {
-                AllTasks = rTask.Find.OrderBy(o => o.Name).Select(t=> new VMIndex.Task() {
-                     Name = t.Name,
-                     Description = t.Description,
-                     AL_Status = this.AL(t.Done?"Done":"Todo", a=>a.Done(t.Id)),
-                     AL_Edit = this.AL("Edit", a => a.Edit(t.Id)),
-                     AL_Delete = this.AL("Delete", a=>a.Delete(t.Id))
-                }),
-                AL_AddTask = this.AL("Add new task",c=>c.AddNewTask(null,null))
-            });
+            return View(sMapper.Map<Task[], VMIndex>(rTask.Find.ToArray()));
         }
 
-        public ActionResult AddNewTask(string name,string description)
+        public ActionResult AddNewTask(Task task)
         {
-            var t = new Task() { Description = description, Name = name };
-            rTask.SaveOrUpdate(t);
+            rTask.SaveOrUpdate(task);
             return this.RedirectToAction(c => c.Index());
         }
 
@@ -75,22 +77,14 @@ namespace Tasks.Core.Controllers
 
         public ActionResult Edit(int id)
         {
-            var t = rTask.GetById(id);
-            return View(new VMEdit()
-            {
-                 Name = t.Name,
-                 Description = t.Description,
-                 AL_PostEdit = this.AL("Save changes",c=>c.PostEdit(t.Id,null,null)),
-                 AL_CancelEdit = this.AL("Cancel changes",c=>c.Index())
-            });
+            return View(sMapper.Map<Task,VMEdit>(rTask.GetById(id)));
         }
 
-        public ActionResult PostEdit(int id,string name,string description)
+        public ActionResult PostEdit(int id)
         {
-            var t = rTask.GetById(id);
-            t.Name = name;
-            t.Description = description;
-            rTask.SaveOrUpdate(t);
+            var task = rTask.GetById(id);
+            UpdateModel(task);
+            rTask.SaveOrUpdate(task);
             return this.RedirectToAction(c => c.Index());
         }
 

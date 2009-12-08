@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Tasks.Core.Interfaces
+namespace Tasks.Core.Services
 {
     public interface IRepository<T> where T : IModelId
     {

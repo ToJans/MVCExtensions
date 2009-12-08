@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Tasks.Core.Interfaces;
+using Tasks.Core.Services;
 
 namespace Tasks.Core.Model
 {

@@ -19,6 +19,6 @@ namespace Tasks.ViewModel.Home
 
         public IEnumerable<Task> AllTasks;
         public VMActionLink AL_AddTask;
-        public bool HasNoTasks {get {return AllTasks.Count()==0;}}
+        public bool HasNoTasks;
     }
 }

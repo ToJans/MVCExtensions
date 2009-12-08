@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=0.4.0.126, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL" />
     <Reference Include="MvcContrib, Version=2.0.9.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -48,11 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Interfaces\IModelId.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Services\IMapper.cs" />
+    <Compile Include="Services\IModelId.cs" />
+    <Compile Include="Services\Impl\Mapper.cs" />
+    <Compile Include="Services\IRepository.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\FakeRepository.cs" />
+    <Compile Include="Services\Impl\FakeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvcExtensions\MvcExtensions.csproj">
@@ -65,6 +68,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lib\AutoMapper.dll" />
     <Content Include="lib\Microsoft.Web.Mvc.dll" />
     <Content Include="lib\MvcContrib.dll" />
     <Content Include="lib\Spark.dll" />
