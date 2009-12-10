@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MvcExtensions.Model;
 
-namespace Tasks.Core.Services
+namespace MvcExtensions.Services
 {
     public interface IRepository<T> where T : IModelId
     {

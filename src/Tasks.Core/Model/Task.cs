@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Tasks.Core.Services;
+using MvcExtensions.Model;
 
 namespace Tasks.Core.Model
 {

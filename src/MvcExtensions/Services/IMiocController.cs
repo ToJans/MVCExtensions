@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Tasks.Core.Services
+namespace MvcExtensions.Services
 {
-    public interface IModelId
+    public interface IMiocService<T>
     {
-        int Id { get; set; }
     }
 }

@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MvcExtensions.Model;
 
-namespace Tasks.Core.Services.Impl
+namespace MvcExtensions.Services.Impl
 {
     public class FakeRepository<T> : IRepository<T> where T:IModelId 
     {
         // this should be some kind of database instead of the array
         public static Dictionary<int, T> Instances = new Dictionary<int, T>();
+
+        public FakeRepository()
+        {
+        }
 
         public FakeRepository(IEnumerable<T> instances)
         {

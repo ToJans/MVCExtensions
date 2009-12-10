@@ -47,37 +47,51 @@ using Tasks.Core.Model;
 using Tasks.Core.Services;
 using Tasks.ViewModel.Home;
 using Tasks.Core.Services.Impl;
+using System;
+using MvcExtensions.Model;
+using MvcExtensions.Services.Impl;
+using MvcExtensions.Services;
 
 namespace Tasks.Core.Controllers
 {
+
     public class HomeController : Controller
     {
-        // for the sake of the demo we do not use DI but static instances
-        static IRepository<Task> rTask = rTask ?? new FakeRepository<Task>(null);
-        static IMapper sMapper = sMapper ?? new Mapper();
+        IMioc Map;
+        IRepository<Task> rTask;
+
+        public HomeController(IMioc Map,IRepository<Task> rTask)
+        {
+            this.Map = Map;
+            this.rTask = rTask;
+        }
 
         public ActionResult Index()
         {
-            return View(sMapper.Map<Task[], VMIndex>(rTask.Find.ToArray()));
+            var tasks = rTask.Find.ToArray();
+            return View(Map.To<VMIndex>().From(tasks)); 
         }
 
         public ActionResult AddNewTask(Task task)
         {
+            TryUpdateModel(task);
             rTask.SaveOrUpdate(task);
             return this.RedirectToAction(c => c.Index());
         }
 
         public ActionResult Done(int id)
         {
-            var t = rTask.GetById(id);
-            t.Done = !t.Done;
-            rTask.SaveOrUpdate(t);
+            var task = rTask.GetById(id);
+            task.Done = !task.Done;
+            rTask.SaveOrUpdate(task);
+
             return this.RedirectToAction(c=>c.Index());
         }
 
         public ActionResult Edit(int id)
         {
-            return View(sMapper.Map<Task,VMEdit>(rTask.GetById(id)));
+            var task = rTask.GetById(id);
+            return View(Map.To<VMEdit>().From(task));
         }
 
         public ActionResult PostEdit(int id)
@@ -90,7 +104,8 @@ namespace Tasks.Core.Controllers
 
         public ActionResult Delete(int id)
         {
-            rTask.Delete(rTask.GetById(id));
+            var task = rTask.GetById(id);
+            rTask.Delete(task);
             return this.RedirectToAction(c => c.Index());
         }
     }
