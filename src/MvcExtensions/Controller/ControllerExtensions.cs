@@ -9,7 +9,7 @@ using MvcExtensions.Model;
 namespace MvcExtensions.Controller
 {
 
-    public static class IControllerExtensions
+    public static class ControllerExtensions
     {
         public static VMActionLink AL<TController>(this TController controller, string description
         , Expression<Func<TController, ActionResult>> ActionExpression)

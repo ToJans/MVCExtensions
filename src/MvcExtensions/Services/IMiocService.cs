@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MvcExtensions.Services
 {
-    public interface IMiocService<T>
+    public interface IMiocService<TController>
     {
     }
 }

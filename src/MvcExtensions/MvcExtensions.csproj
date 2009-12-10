@@ -71,7 +71,7 @@
     <Compile Include="Controller\ControllerExtensions.cs" />
     <Compile Include="Model\IModelId.cs" />
     <Compile Include="Services\IIOC.cs" />
-    <Compile Include="Services\IMiocController.cs" />
+    <Compile Include="Services\IMiocService.cs" />
     <Compile Include="Services\IMoic.cs" />
     <Compile Include="Services\Impl\FakeRepository.cs" />
     <Compile Include="Services\Impl\IOC.cs" />
