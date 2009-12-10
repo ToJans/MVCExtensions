@@ -7,26 +7,24 @@ using MvcExtensions.Controller;
 using Castle.Windsor;
 using Castle.Core;
 using AutoMapper.Mappers;
+using Castle.MicroKernel.Registration;
 
 
 namespace MvcExtensions.Services.Impl
 {
-    public abstract class Mioc : IOC, IMioc 
+    public abstract class MvcMapper : IMapper 
     {
 
         protected am.Configuration MapperCfg { get; private set; }
         protected am.IMappingEngine Mapper { get; private set; }
 
-        public Mioc(IIOC parent)
+        public MvcMapper()
         {
            MapperCfg = new AutoMapper.Configuration(
                new AutoMapper.TypeMapFactory()
                ,MapperRegistry.AllMappers());
            Initialize();
            Mapper = new AutoMapper.MappingEngine(MapperCfg);
-           Kernel.AddComponentInstance<IMioc>(this);
-           var p = (WindsorContainer)parent;
-           p.AddChildContainer(this);
         }
 
         #region IMoic Members
@@ -68,11 +66,9 @@ namespace MvcExtensions.Services.Impl
         {
             return new Wrapper<VType>() { Mapper = this };
         }
-        
 
-        public virtual void Initialize()
-        {
-        }
+
+        public abstract void Initialize();
 
 
         #region IMoic Members

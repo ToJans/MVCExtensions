@@ -70,13 +70,13 @@
   <ItemGroup>
     <Compile Include="Controller\ControllerExtensions.cs" />
     <Compile Include="Model\IModelId.cs" />
-    <Compile Include="Services\IIOC.cs" />
-    <Compile Include="Services\IMiocService.cs" />
-    <Compile Include="Services\IMoic.cs" />
+    <Compile Include="Services\IMvcChildContainer.cs" />
+    <Compile Include="Services\IMvcContainer.cs" />
+    <Compile Include="Services\IMapper.cs" />
     <Compile Include="Services\Impl\FakeRepository.cs" />
-    <Compile Include="Services\Impl\IOC.cs" />
-    <Compile Include="Services\Impl\Mioc.cs" />
-    <Compile Include="Services\Impl\MiocControllerFactory.cs" />
+    <Compile Include="Services\Impl\MvcContainer.cs" />
+    <Compile Include="Services\Impl\MvcMapper.cs" />
+    <Compile Include="Services\Impl\MvcContainerControllerFactory.cs" />
     <Compile Include="Services\IRepository.cs" />
     <Compile Include="View\HtmlHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

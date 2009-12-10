@@ -57,10 +57,10 @@ namespace Tasks.Core.Controllers
 
     public class HomeController : Controller
     {
-        IMioc Map;
+        IMapper Map;
         IRepository<Task> rTask;
 
-        public HomeController(IMioc Map,IRepository<Task> rTask)
+        public HomeController(IMapper Map,IRepository<Task> rTask)
         {
             this.Map = Map;
             this.rTask = rTask;

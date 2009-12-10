@@ -4,11 +4,11 @@ using Castle.MicroKernel.Registration;
 
 namespace MvcExtensions.Services.Impl
 {
-    public class IOC : WindsorContainer, IIOC
+    public class MvcContainer : WindsorContainer, IMvcContainer
     {
-        public IOC()
+        public MvcContainer()
         {
-            Kernel.AddComponentInstance<IIOC>( this);
+            Kernel.AddComponentInstance<IMvcContainer>( this);
         }
 
         public void RegisterGenericTypeTransient(System.Type S, System.Type T)

@@ -2,7 +2,7 @@
 
 namespace MvcExtensions.Services
 {
-    public interface IIOC  
+    public interface IMvcContainer  
     {
         T Resolve<T>();
         T Resolve<T>(string name);

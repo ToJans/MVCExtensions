@@ -12,7 +12,7 @@ namespace MvcExtensions.Services
 
     public class Wrapper<VType>
     {
-        public IMioc Mapper;
+        public IMapper Mapper;
 
         public VType From<S>(S s)
         {
@@ -49,7 +49,7 @@ namespace MvcExtensions.Services
     }
 
 
-    public interface IMioc : IIOC 
+    public interface IMapper 
     {
         T Map<S, T>(S source);
         T Map<S1, S2, T>(S1 source1, S2 source2);

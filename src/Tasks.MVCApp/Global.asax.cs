@@ -5,13 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Spark.Web.Mvc;
-using MvcExtensions.Services.Impl;
 using Tasks.Core.Controllers;
-using MvcExtensions.Services;
 using Tasks.Core.Services.Impl;
 using Tasks.Core.Services;
 using Tasks.Core.Model;
 using Castle.Core;
+using Castle.MicroKernel.Registration;
+using MvcExtensions.Services;
+using MvcExtensions.Services.Impl;
 
 namespace Tasks.MVCApp
 {
@@ -35,11 +36,11 @@ namespace Tasks.MVCApp
         {
             RegisterRoutes(RouteTable.Routes);
 
-            var ioc = new IOC();
-            ioc.AddComponent<IRepository<Task>, FakeRepository<Task>>();
-            ioc.AddComponentLifeStyle<IMiocService<HomeController>, HomeMioc>(LifestyleType.Transient);
+            var container = new MvcContainer();
+            container.AddComponent<IRepository<Task>, FakeRepository<Task>>();
+            container.AddComponent<IMvcCustomContainer<HomeController>, HomeContainer>();
 
-            var fact = new MiocControllerFactory(ioc);
+            var fact = new MvcContainerControllerFactory(container);
             ControllerBuilder.Current.SetControllerFactory(fact);
             ControllerBuilder.Current.DefaultNamespaces.Add("Tasks.Core.Controllers");
 
