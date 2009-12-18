@@ -1,0 +1,73 @@
+﻿Define a task app context
+ using Tasks.Specs.TaskAppContext
+  from Tasks.Specs.DLL
+  
+  
+Story manipulate tasks
+    
+    Is about a task app context
+    
+    As a person
+    I want to use an app to log my tasks
+    So that I do not forget anything and get my priorities straight
+    
+    Scenario Startup
+        When I Begin
+        Then I should see "No tasks yet"
+         And I should see a button with "Add new task"
+    
+    Scenario Add a new task
+        Given I did startup
+          And the following tasks exist
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Do the dishes             | Be carefull            | Todo   |
+            | Update Aubergine project  | procrastination FTW !! | Todo   |
+            | Order stamps              | 20 pieces              | Done   |
+            +---------------------------+------------------------+--------+
+        When I enter "Feed the fishes" in "Name"
+         and I enter "Be carefull" in "Description"
+         and I press the button "Add new task"
+        Then I should see the following table rows
+            +---------------------------+------------------------+--------+------+--------+
+            | name                      | description            | status | edit | delete |
+            +---------------------------+------------------------+--------+------+--------+
+            | Do the dishes             | Be carefull            | Todo   | Edit | Delete |
+            | Update Aubergine project  | procrastination FTW !! | Todo   | Edit | Delete |
+            | Order stamps              | 20 pieces              | Done   | Edit | Delete |
+            | Feed the fishes           | Be carefull            | Todo   | Edit | Delete |
+            +---------------------------+------------------------+--------+------+--------+
+            
+   Scenario Switch the task status from "Todo"
+        When I switch the status of the task "Do the dishes"
+        Then the tasklist should contain the following tasks 
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Do the dishes             | Be carefull            | Done   |
+            | Update Aubergine project  | procrastination FTW !! | Todo   |
+            | Order stamps              | 20 pieces              | Done   |
+            | Feed the fishes           | Be carefull            | Todo   |
+            +---------------------------+------------------------+--------+
+   
+   Scenario Switch the task status from "Done"
+        When I switch the status of the task "Order stamps"
+        Then the tasklist should contain the following tasks 
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Do the dishes             | Be carefull            | Todo   |
+            | Update Aubergine project  | procrastination FTW !! | Todo   |
+            | Order stamps              | 20 pieces              | Todo   |
+            +---------------------------+------------------------+--------+
+        
+   Scenario Delete a task
+        When I delete the task "Update Aubergine project"
+        Then the tasklist should contain the following tasks 
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Do the dishes             | Be carefull            | Todo   |
+            | Order stamps              | 20 pieces              | Done   |
+            +---------------------------+------------------------+--------+

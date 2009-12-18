@@ -1,5 +1,7 @@
 <viewdata a="MvcExtensions.Model.VMActionLink" />
 <form action="${Url.ActionLink(a)}" method="post">
 <render />
-<button type="submit">${a.Description}</button>
+<if condition="!string.IsNullOrEmpty(a.Description)">
+    <button type="submit">${a.Description}</button>
+</if>
 </form>

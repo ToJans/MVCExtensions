@@ -9,7 +9,7 @@ namespace MvcExtensions.Services.Impl
     public class FakeRepository<T> : IRepository<T> where T:IModelId 
     {
         // this should be some kind of database instead of the array
-        public static Dictionary<int, T> Instances = new Dictionary<int, T>();
+        public Dictionary<int, T> Instances = new Dictionary<int, T>();
 
         public FakeRepository()
         {

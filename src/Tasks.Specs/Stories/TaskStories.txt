@@ -1,0 +1,69 @@
+﻿Define a group of tasks
+ using Tasks.Specs.TaskContext
+  from Tasks.Specs.DLL
+  
+  
+Story manipulate tasks
+    Is about a group of tasks
+    
+    As a person
+    I want to log my tasks
+    So that I do not forget anything and get my priorities straight
+    
+    Given the following tasks exist
+        +---------------------------+------------------------+--------+
+        | name                      | description            | status |
+        +---------------------------+------------------------+--------+
+        | Do the dishes             | Be carefull            | Todo   |
+        | Update Aubergine project  | procrastination FTW !! | Todo   |
+        | Order stamps              | 20 pieces              | Done   |
+        +---------------------------+------------------------+--------+
+    
+    Scenario Add a new task
+        When I add the following task
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Feed the fishes           | Be carefull            | Todo   |
+            +---------------------------+------------------------+--------+
+        Then the tasklist should contain the following tasks 
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Do the dishes             | Be carefull            | Todo   |
+            | Update Aubergine project  | procrastination FTW !! | Todo   |
+            | Order stamps              | 20 pieces              | Done   |
+            | Feed the fishes           | Be carefull            | Todo   |
+            +---------------------------+------------------------+--------+
+            
+   Scenario Switch the task status from "Todo"
+        When I switch the status of the task "Do the dishes"
+        Then the tasklist should contain the following tasks 
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Do the dishes             | Be carefull            | Done   |
+            | Update Aubergine project  | procrastination FTW !! | Todo   |
+            | Order stamps              | 20 pieces              | Done   |
+            +---------------------------+------------------------+--------+
+   
+   Scenario Switch the task status from "Done"
+        When I switch the status of the task "Order stamps"
+        Then the tasklist should contain the following tasks 
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Do the dishes             | Be carefull            | Todo   |
+            | Update Aubergine project  | procrastination FTW !! | Todo   |
+            | Order stamps              | 20 pieces              | Todo   |
+            +---------------------------+------------------------+--------+
+        
+   Scenario Delete a task
+        When I delete the task "Update Aubergine project"
+        Then the tasklist should contain the following tasks 
+            +---------------------------+------------------------+--------+
+            | name                      | description            | status |
+            +---------------------------+------------------------+--------+
+            | Do the dishes             | Be carefull            | Todo   |
+            | Order stamps              | 20 pieces              | Done   |
+            +---------------------------+------------------------+--------+
