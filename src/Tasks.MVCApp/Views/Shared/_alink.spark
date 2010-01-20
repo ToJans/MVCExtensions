@@ -1,2 +1,0 @@
-<viewdata a="MvcExtensions.Model.VMActionLink">
-!{Html.ActionLink(a)}

@@ -1,0 +1,143 @@
+<ul>
+Aubergine Console Runner - Core bvba - Tom Janssens 2009
+
+</ul>
+<ul>Parsing files
+<ul>  Processing file(s) : Stories\*.txt
+<ul>    Parsing file : C:\Projecten\Be.Corebvba.MVCExtensions\src\Tasks.Specs\bin\Release\Stories\TaskStories.txt
+</ul></ul></ul><ul>DSLs:
+<ul>  a group of tasks [Tasks.Specs.TaskContext]
+<ul>    Void I add the following task(String[] name,String[] description,String[] status)</ul>
+<ul>    Void the following tasks exist(String[] name,String[] description,String[] status)</ul>
+<ul>    Boolean the tasklist should contain the following tasks(String[] name,String[] description,String[] status)</ul>
+<ul>    Void I switch the status of (?<task>.+)(Task task)</ul>
+<ul>    Void I delete (?<task>.+)(Task task)</ul>
+<ul>    Task the task "(?<name>.+)"(String name)</ul>
+</ul>
+</ul>
+<ul>Running Tests
+<ul>
+    <li>Story manipulate tasks <a href='#' title=''>OK</a></li>
+    <ul>
+        <li>Context a group of tasks <a href='#' title=''>OK</a></li>
+        <ul>
+        </ul>
+        <li>Given the following tasks exist <a href='#' title=''>OK</a></li>
+        <ul>
+            <li>Data | name                      | description            | status | <a href='#' title=''>OK</a></li>
+            <ul>
+            </ul>
+            <li>Data | Do the dishes             | Be carefull            | Todo   | <a href='#' title=''>OK</a></li>
+            <ul>
+            </ul>
+            <li>Data | Update Aubergine project  | procrastination FTW !! | Todo   | <a href='#' title=''>OK</a></li>
+            <ul>
+            </ul>
+            <li>Data | Order stamps              | 20 pieces              | Done   | <a href='#' title=''>OK</a></li>
+            <ul>
+            </ul>
+        </ul>
+
+        <li>Scenario Add a new task <a href='#' title=''>OK</a></li>
+        <ul>
+            <li>When I add the following task <a href='#' title=''>OK</a></li>
+            <ul>
+                <li>Data | name                      | description            | status | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Feed the fishes           | Be carefull            | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+            </ul>
+
+            <li>Then the tasklist should contain the following tasks <a href='#' title=''>OK</a></li>
+            <ul>
+                <li>Data | name                      | description            | status | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Do the dishes             | Be carefull            | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Update Aubergine project  | procrastination FTW !! | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Order stamps              | 20 pieces              | Done   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Feed the fishes           | Be carefull            | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+            </ul>
+
+        </ul>
+
+        <li>Scenario Switch the task status from "Todo" <a href='#' title=''>OK</a></li>
+        <ul>
+            <li>When I switch the status of the task "Do the dishes" <a href='#' title=''>OK</a></li>
+            <ul>
+            </ul>
+            <li>Then the tasklist should contain the following tasks <a href='#' title=''>OK</a></li>
+            <ul>
+                <li>Data | name                      | description            | status | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Do the dishes             | Be carefull            | Done   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Update Aubergine project  | procrastination FTW !! | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Order stamps              | 20 pieces              | Done   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+            </ul>
+
+        </ul>
+
+        <li>Scenario Switch the task status from "Done" <a href='#' title=''>OK</a></li>
+        <ul>
+            <li>When I switch the status of the task "Order stamps" <a href='#' title=''>OK</a></li>
+            <ul>
+            </ul>
+            <li>Then the tasklist should contain the following tasks <a href='#' title=''>OK</a></li>
+            <ul>
+                <li>Data | name                      | description            | status | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Do the dishes             | Be carefull            | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Update Aubergine project  | procrastination FTW !! | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Order stamps              | 20 pieces              | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+            </ul>
+
+        </ul>
+
+        <li>Scenario Delete a task <a href='#' title=''>OK</a></li>
+        <ul>
+            <li>When I delete the task "Update Aubergine project" <a href='#' title=''>OK</a></li>
+            <ul>
+            </ul>
+            <li>Then the tasklist should contain the following tasks <a href='#' title=''>OK</a></li>
+            <ul>
+                <li>Data | name                      | description            | status | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Do the dishes             | Be carefull            | Todo   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+                <li>Data | Order stamps              | 20 pieces              | Done   | <a href='#' title=''>OK</a></li>
+                <ul>
+                </ul>
+            </ul>
+
+        </ul>
+
+    </ul>
+
+</ul>
+</ul>

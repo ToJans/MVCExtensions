@@ -1,0 +1,100 @@
+﻿body
+{
+    background-color:#ABCDEF;
+    margin : auto;
+    width: 935px;
+    font-family:Lucida Sans;
+    font-size:small;
+}
+
+.content
+{
+    padding:20px;
+    margin:20px;
+    background-color: #EEEEFF;
+    color: black;
+}
+
+.taskcontainer
+{
+  background-color:#FFFFFF;
+  padding:0;
+}
+
+.taskbox
+{
+   background-color:#EEEEFF;
+   margin:10px;
+   width:390px;
+   height:100px;
+   display:inline-block;
+   padding:5px;
+}
+
+.taskbox .status
+{
+  display:block;
+  float:right;
+  
+}
+
+.taskbox .delete
+{
+  display:block;
+  float:left;
+}
+
+.taskbox .name
+{
+    font-weight:bolder;
+    font-size:larger;
+}
+
+.taskbox .description
+{
+  display:block;
+  width:390px;
+  height:65px;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+.taskbox label
+{
+  width:90px;
+  padding:2px;
+  display:inline-block;
+  vertical-align:top;
+}
+
+.taskbox button
+{
+    float:left;
+    position:relative ;
+    top:-30px;
+    
+}
+
+.taskbox input,.taskbox textarea
+{
+    width:270px;
+}
+
+content div,span,label,h1,h2,h3,h4,h5,h6,input,textarea,button {
+  padding:2px;
+  margin:2px;
+}
+
+.validationmessage
+{
+    color:Red;
+}
+
+.footer {
+    text-align:center;
+    font-size:large;
+    padding:10;
+    background-color:White;
+    margin-top:10px;
+    
+}

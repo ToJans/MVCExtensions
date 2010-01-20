@@ -31,46 +31,53 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=0.4.0.126, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+    <Reference Include="Be.Corebvba.Aubergine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\AutoMapper.dll</HintPath>
+      <HintPath>..\..\libs\Aubergine\Be.Corebvba.Aubergine.dll</HintPath>
     </Reference>
-    <Reference Include="Be.Corebvba.Aubergine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Castle.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\Castle.Core.dll</HintPath>
+      <HintPath>..\..\libs\Castle.Windsor\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\Castle.DynamicProxy2.dll</HintPath>
+      <HintPath>..\..\libs\Castle.Windsor\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
     <Reference Include="Castle.MicroKernel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\Castle.MicroKernel.dll</HintPath>
+      <HintPath>..\..\libs\Castle.Windsor\Castle.MicroKernel.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\Castle.Windsor.dll</HintPath>
+      <HintPath>..\..\libs\Castle.Windsor\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\Microsoft.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\libs\MvcContrib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="MvcContrib, Version=2.0.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\MvcContrib.dll</HintPath>
+      <HintPath>..\..\libs\MvcContrib\MvcContrib.dll</HintPath>
     </Reference>
     <Reference Include="Spark, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\Spark.dll</HintPath>
+      <HintPath>..\..\libs\Spark\Spark.dll</HintPath>
     </Reference>
     <Reference Include="Spark.Web.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tasks.Core\lib\Spark.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\libs\Spark\Spark.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.62.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\SqLite\System.Data.SQLite.DLL</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=2.0.38.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\SqLite\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -86,8 +93,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\Be.Corebvba.Aubergine.dll" />
-    <Content Include="lib\ConsoleRunner.exe" />
     <None Include="Stories\TaskWebApp.todo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -114,7 +119,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)lib\ConsoleRunner.exe" Stories\*.txt -d -html &gt; "$(TargetDir)output.html"
+    <PostBuildEvent>"$(ProjectDir)..\..\libs\Aubergine\ConsoleRunner.exe" Stories\*.txt -d -html &gt; "$(TargetDir)output.html"
 "$(TargetDir)output.html"</PostBuildEvent>
   </PropertyGroup>
 </Project>

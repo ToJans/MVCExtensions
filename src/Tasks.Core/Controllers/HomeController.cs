@@ -1,111 +1,109 @@
-﻿// The quest for perfect asp.net MVC code - v0.3
-//
-// For a while I have been looking for the perfect ASP.Net MVC code.
-// This is the cleanest code I have been able to write.
-// I would like to challenge everyone to do better !!!
-// 
-// By this I mean creating a better controller/views if possible codewise.
-// The focus is not on the layout stuff, but having it might be a plus.
-//
-// The scope : a very rudimentary Task list (KISS)
-//
-// You can download the full source here using (msys)git:
-//     http://github.com/ToJans/MVCExtensions
-//
-// You will see it is very easy to alter, just fetch it with git and press F5
-//
-// Please do let me know what you think about my approach as well,
-// and whether you could do better: ToJans@twitter
-// Send this link to as much fellow coders as possible, so we can see lots of alternatives
-//
-// PS: you can also leave a comment @ my website (look at my twitter account for the url)
-//
-// Edit: this is my third version, and I am still looking for improvements
-//
-// Some noteworthy facts :
-// - In the MVCapp, there only DLL directly referenced is the ViewModel DLL, 
-//   so the views do NOT reference the controllers anywhere
-// - The controller contains only logic & domain model objects => VERY CLEAN Controller
-// - The resulting controller action model is mapped to the ViewModel using 
-//   IMapper.Map<source,ViewModel>(s,vm)
-// - The viewmodel should include everything that should be visible on the screen, so not only
-//   data but also the actionlinks one can use
-// - The actionlinks for the viewpages are defined in the IMapper, and automaticly passed on to
-//   the view => you can see/alter the program flow in the mapping definitions
-// - Stubbing the controller should be a piece of cake using this code, so you could use this
-//   design to easily develop application mockups that are ready to be implemented once the client 
-//   approves, so first build your viewmodels and views, show it to the client, and upon agreement
-//   start development on the controller.... In fact I am going to test this method on my next project
-//
-// Kind regards,
-// Tom Janssens
-//
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using MvcContrib;
-using Tasks.Core.Model;
-using Tasks.Core.Services;
-using Tasks.ViewModel.Home;
-using Tasks.Core.Services.Impl;
-using System;
-using MvcExtensions.Model;
-using MvcExtensions.Services.Impl;
 using MvcExtensions.Services;
+using Tasks.Core.Model;
+using Tasks.UI.ViewModels.Home;
 
 namespace Tasks.Core.Controllers
 {
 
     public class HomeController : Controller
     {
-        IMapper Map;
-        IRepository<Task> rTask;
+        IMapper sMap;
+        IRepository sRepo;
+        IUnitOfWork sUnitOfWork;
 
-        public HomeController(IMapper Map,IRepository<Task> rTask)
+        ModelStateDictionary FlashModelState
         {
-            this.Map = Map;
-            this.rTask = rTask;
+            get { return (ModelStateDictionary)TempData["mstate"]; }
+            set { TempData["mstate"] = value; }
+        }
+
+        public string FlashMessage
+        {
+            get { return (string)TempData["msg"]; }
+            set { TempData["msg"] = value; }
+        }
+
+        public string FlashError
+        {
+            get { return (string)TempData["err"]; }
+            set { TempData["err"] = value; }
+        }
+
+        public HomeController(IMapper sMap, IRepository sRepo, IUnitOfWork sUnitOfWork)
+        {
+            this.sMap = sMap;
+            this.sRepo = sRepo;
+            this.sUnitOfWork = sUnitOfWork;
         }
 
         public ActionResult Index()
         {
-            var tasks = rTask.Find.ToArray();
-            return View(Map.To<VMIndex>().From(tasks)); 
+            ModelState.Merge(FlashModelState);
+            var tasks = sRepo.Find<Task>().ToArray();
+            return View(sMap.To<VMIndex>().From(tasks,this)); 
         }
 
-        public ActionResult AddNewTask(Task task)
+        public ActionResult AddNewTask(IMTask imtask)
         {
-            TryUpdateModel(task);
-            rTask.SaveOrUpdate(task);
+            if (!ModelState.IsValid)
+            {
+                FlashModelState = ModelState;
+                FlashError = "Unable to save task";
+                return this.RedirectToAction(c => c.Index());
+            }
+            var task = sMap.To<Task>().From(imtask);
+
+            sRepo.SaveOrUpdate(task);
+            FlashMessage = "Task \"" + task.Name + "\" saved";
+            sUnitOfWork.Commit();
             return this.RedirectToAction(c => c.Index());
         }
 
         public ActionResult Done(int id)
         {
-            var task = rTask.GetById(id);
+            var task = sRepo.GetById<Task>(id);
             task.Done = !task.Done;
-            rTask.SaveOrUpdate(task);
-
-            return this.RedirectToAction(c=>c.Index());
+            sRepo.SaveOrUpdate(task);
+            sUnitOfWork.Commit();
+            FlashMessage = "Task \"" + task.Name + "\" updated";
+            return this.RedirectToAction(c => c.Index());
         }
 
         public ActionResult Edit(int id)
         {
-            var task = rTask.GetById(id);
-            return View(Map.To<VMEdit>().From(task));
+            ModelState.Merge(FlashModelState);
+            var task = sRepo.GetById<Task>(id);
+            return View(sMap.To<VMEdit>().From(task,this));
         }
 
-        public ActionResult PostEdit(int id)
+        public ActionResult PostEdit(int id,IMTask imTask)
         {
-            var task = rTask.GetById(id);
-            UpdateModel(task);
-            rTask.SaveOrUpdate(task);
-            return this.RedirectToAction(c => c.Index());
+            if (ModelState.IsValid)
+            {
+                var task = sRepo.GetById<Task>(id);
+                sMap.Map(imTask, task);
+                sRepo.SaveOrUpdate(task);
+                FlashMessage = "Task \"" + task.Name + "\" saved";
+                sUnitOfWork.Commit();
+                return this.RedirectToAction(c => c.Index());
+            }
+            else
+            {
+                FlashModelState = ModelState;
+                FlashError = "Unable to save task";
+                return this.RedirectToAction(c => c.Edit(id));
+            }
         }
 
         public ActionResult Delete(int id)
         {
-            var task = rTask.GetById(id);
-            rTask.Delete(task);
+            var task = sRepo.GetById<Task>(id);
+            sRepo.Delete(task);
+            FlashMessage = "Task \"" + task.Name + "\" deleted";
+            sUnitOfWork.Commit();
             return this.RedirectToAction(c => c.Index());
         }
     }

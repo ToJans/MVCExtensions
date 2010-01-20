@@ -1,0 +1,3 @@
+<use namespace="System.Web.Mvc.Html" />
+<viewdata src="string" />
+<div class="validationmessage">!{Html.ValidationMessage(src)}</div>

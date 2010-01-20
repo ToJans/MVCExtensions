@@ -13,7 +13,7 @@ namespace Tasks.Specs
     {
         const string DONE = "Done";
 
-        IRepository<Task> rTask = new FakeRepository<Task>();
+        IRepository rTask = new FakeRepository();
 
         public TaskContext()
         {
@@ -35,7 +35,7 @@ namespace Tasks.Specs
         [DSL("the tasklist should contain the following tasks")]
         public bool ContainsTasks(string[] name, string[] description, string[] status)
         {
-            var arr = rTask.Find.ToArray();
+            var arr = rTask.Find<Task>().ToArray();
             if (arr.Length != name.Length) return false;
             for (int i = 0; i < name.Length; i++)
             {
@@ -63,7 +63,7 @@ namespace Tasks.Specs
         [DSL("the task \"(?<name>.+)\"")]
         Task GetTask(string name)
         {
-            return rTask.Find.Where(t => t.Name == name).FirstOrDefault();
+            return rTask.Find<Task>().Where(t => t.Name == name).FirstOrDefault();
         }
 
 

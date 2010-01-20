@@ -1,0 +1,30 @@
+<viewdata model="Tasks.UI.ViewModels.Home.VMIndex" />
+<content name="Title">
+    Index
+</content>
+<content name="Main">
+    <if condition="Model.HasNoTasks">
+        <div class="taskbox">
+            <div class="name">No tasks yet</div>
+        </div>
+    </if>
+        <else>
+            <div class="taskbox" each="var t in Model.AllTasks">
+                <div class="name"><al_a al="t.Name" /></div>
+                <div class="description">${t.Description}</div>
+                <div class="status"><al_a al="t.AL_Status" /></div>
+                <div class="delete"><al_a al="t.AL_Delete" /> </div>
+            </div>
+        </else>
+        <br />
+    <div class="taskbox" >
+        <al_form al="Model.AL_AddTask">
+            <label for="Name">Name</label>
+            <input type="text" name="Name" />
+            <validation src="'Name'" />
+            <label for="Description">Description</label>
+            <textarea name="Description"></textarea>
+            <validation src="'Description'" />
+        </al_form>
+    </div>
+</content>

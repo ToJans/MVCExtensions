@@ -6,11 +6,11 @@ using MvcExtensions.Model;
 
 namespace MvcExtensions.Services
 {
-    public interface IRepository<T> where T : IModelId
+    public interface IRepository 
     {
-        T GetById(int id);
-        IQueryable<T> Find { get; }
-        void SaveOrUpdate(T instance);
-        void Delete(T instance);
+        T GetById<T>(int id) where T : IModelId;
+        IQueryable<T> Find<T>() where T : IModelId;
+        void SaveOrUpdate(IModelId instance);
+        void Delete(IModelId instance);
     }
 }

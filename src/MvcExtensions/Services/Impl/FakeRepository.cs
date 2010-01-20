@@ -6,16 +6,17 @@ using MvcExtensions.Model;
 
 namespace MvcExtensions.Services.Impl
 {
-    public class FakeRepository<T> : IRepository<T> where T:IModelId 
+    [Obsolete("Use MvcExtensions.Services.Impl.FluentNHibernate.SqlLiteInMemoryDatabase instead of MvcExtensions.Services.Impl.FakeRepository")]
+    public class FakeRepository : IRepository
     {
         // this should be some kind of database instead of the array
-        public Dictionary<int, T> Instances = new Dictionary<int, T>();
+        public Dictionary<int, object> Instances = new Dictionary<int, object>();
 
         public FakeRepository()
         {
         }
 
-        public FakeRepository(IEnumerable<T> instances)
+        public FakeRepository(IEnumerable<IModelId> instances)
         {
             if (instances != null) 
                 foreach (var i in instances)
@@ -24,18 +25,20 @@ namespace MvcExtensions.Services.Impl
 
         #region IRepository<T> Members
 
-        public T GetById(int id)
+        public T GetById<T>(int id) where T:Model.IModelId 
         {
-            return Instances[id];
+            return Instances.Where(i=>i.Key == id && i.Value.GetType() == typeof(T))
+                .Select(i=>i.Value).Cast<T>().FirstOrDefault() ;
         }
 
-        public IQueryable<T> Find
+        public IQueryable<T> Find<T>() where T : Model.IModelId 
         {
-            get { return Instances.Values.AsQueryable(); }
+            return Instances.Values.Where(i => i.GetType() == typeof(T)).Cast<T>().AsQueryable<T>();
         }
 
-        public void SaveOrUpdate(T instance)
+        public void SaveOrUpdate(IModelId instance)
         {
+            if (Instances.Values.Contains(instance)) return;
             // since in this fake repository nothing is actually written to db
             // this function does nothing except updating the id for new objects
             if (instance.Id == 0)
@@ -45,7 +48,7 @@ namespace MvcExtensions.Services.Impl
             }
         }
 
-        public void Delete(T instance)
+        public void Delete(IModelId instance)
         {
             Instances.Remove(instance.Id);
         }

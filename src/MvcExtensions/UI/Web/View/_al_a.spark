@@ -1,0 +1,3 @@
+<use namespace="MvcExtensions.UI.Web.Helpers" />
+<viewdata al="MvcExtensions.UI.ViewModel.VMActionLink">
+!{Html.ActionLink(al)}

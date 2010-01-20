@@ -1,0 +1,15 @@
+<viewdata model="Tasks.UI.ViewModels.Home.VMEdit" />
+
+<content name="Title">
+    Edit
+</content>
+<content name="Main">
+        <h3>Edit this task</h3>
+        <al_form al="Model.AL_PostEdit">
+            <label for="Name">Name :</label><br/>
+            <input type="text" value="${Model.Name}" name="Name" />
+            <label for="Description">Description:</label>
+            <textarea cols="20" rows="2" name="Description" >${Model.Description}</textarea>
+        </al_form>
+        <al_a al="Model.AL_CancelEdit" />
+</content>

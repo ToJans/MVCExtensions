@@ -37,9 +37,11 @@ namespace MvcExtensions.Services.Impl
             }
             else
             {
+                return null;
                 return base.GetControllerInstance(requestContext, controllerType);
             }
         }
+
 
         public override void ReleaseController(IController controller)
         {
