@@ -4,7 +4,7 @@
   <head>
     <link rel="stylesheet" href="~/Content/Layout/TaskList.css" type="text/css" />
     <script src="~/Content/Scripts/jQuery/jquery-1.4.min.js" type="text/javascript"></script>
-    <script src="~/Content/Scripts/jQuery.jCorners/jquery.jcorners.js" type="text/javascript"></script>
+    <script src="~/Content/Scripts/jQuery.jCorners/jquery.corner.js" type="text/javascript"></script>
     <script src="~/Content/Scripts/jQuery.Notify/jquery.notify.js" type="text/javascript"></script>
     <link rel="stylesheet" href="~/Content/Scripts/jQuery.Notify/notify.css" type="text/css" />
     <script type ="text/javascript">
@@ -23,8 +23,7 @@
                 $(this).hide();
             });
             $('.content,.taskcontainer,.taskbox,.footer').addClass('rounded');
-            var opt = { radius: 5 };
-            $.jcorners('.rounded,a');
+            $('.rounded').corner('8px');
         });
     </script>
        <use content="Script" />
@@ -42,6 +41,7 @@
         </div>
          <div class="footer">
             Simple Tasklist demo !!<br />
+            <br />
             <i>Use <a href="http://github.com/tojans/mvcextensions">MvcExtensions</a> to build ASP.Net MVC Applications quickly.<br />
             Use <a href="http://github.com/tojans/aubergine">Aubergine</a> to verify your BDD specs (<a href="~/Content/output.html">example build output file</a>)<br />
             </i>

@@ -28,7 +28,7 @@ jQuery.jcorners = function(e, o) {
 			var bg = $(e).css("background-color");
 		}else{
 			var bg = "white";
-		}
+		};
 		var guid = this.guid();
 		var padding = this.intval(this(e).css("padding"));
 		var arc = (this.options.radius / this(e).height());

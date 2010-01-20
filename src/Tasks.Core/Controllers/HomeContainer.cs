@@ -29,7 +29,7 @@ namespace Tasks.Core.Services.Impl
                 MapperCfg.CreateMap<Task, VMIndex.Task>()
                     .ForMember(v => v.Name, m => m.MapFrom(t => cHome.AL(t.Name, a => a.Edit(t.Id))))
                     .ForMember(v => v.Description, m => m.MapFrom(t => t.Description))
-                    .ForMember(v => v.AL_Status, m => m.MapFrom(t => cHome.AL(t.Done ? "Done" : "Todo", a => a.Done(t.Id))))
+                    .ForMember(v => v.AL_Status, m => m.MapFrom(t => cHome.AL(t.Done ? "Done" : "Todo", a => a.SwitchStatus(t.Id))))
                     .ForMember(v => v.AL_Delete, m => m.MapFrom(t => cHome.AL("Delete", a => a.Delete(t.Id))));
 
                 MapperCfg.CreateMap<Task[], VMIndex>()

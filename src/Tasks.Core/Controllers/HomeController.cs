@@ -62,7 +62,7 @@ namespace Tasks.Core.Controllers
             return this.RedirectToAction(c => c.Index());
         }
 
-        public ActionResult Done(int id)
+        public ActionResult SwitchStatus(int id)
         {
             var task = sRepo.GetById<Task>(id);
             task.Done = !task.Done;
