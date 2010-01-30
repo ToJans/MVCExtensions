@@ -15,11 +15,11 @@ namespace MvcExtensions.Model
             set
             {
                 if (string.IsNullOrEmpty(value) && !CanBeEmpty)
-                    throw new ArgumentNullException("String can not be empty");
+                    throw new ArgumentNullException(CustomMessage??"This is required");
                 else if (value != null && value.Length > Length)
-                    throw new ArgumentOutOfRangeException("String is too long");
+                    throw new ArgumentOutOfRangeException(CustomMessage ?? "This is too long");
                 else if (Regex != null && !Regex.IsMatch(value))
-                    throw new ArgumentOutOfRangeException("String does not match regular expression");
+                    throw new ArgumentOutOfRangeException(CustomMessage ?? "This does not match the expected format");
                 else
                     _value = value;
             }
@@ -28,6 +28,7 @@ namespace MvcExtensions.Model
         public virtual int Length { get { return int.MaxValue; } }
         public virtual bool CanBeEmpty { get { return true; } }
         public virtual Regex Regex { get { return null; } }
+        public virtual string CustomMessage { get { return null; } }
 
         public MyText()
         {

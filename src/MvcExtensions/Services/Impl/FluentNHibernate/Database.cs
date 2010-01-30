@@ -94,4 +94,13 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
             }
         }
     }
+
+    public class Sql2005Database : Database
+    {
+        public Sql2005Database(string connectionstring, IFluentMapping mappings) :
+            base(MsSqlConfiguration.MsSql2005
+            .ConnectionString(connectionstring)
+            , mappings)
+        { }
+    }
 }

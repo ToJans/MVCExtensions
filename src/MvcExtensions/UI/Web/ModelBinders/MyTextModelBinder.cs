@@ -20,23 +20,22 @@ namespace MvcExtensions.UI.Web.ModelBinders
             bindingContext.ValueProvider.TryGetValue(bindingContext.ModelName, out val);
             if (val == null)
                 return m;
-            if (!m.CanBeEmpty && string.IsNullOrEmpty(val.AttemptedValue))
-            {
-                bindingContext.ModelState.AddModelError(bindingContext.ModelName, 
-                    "Text can not be empty");
-            }
-            else if (val.AttemptedValue.Length > m.Length)
-            {
-                bindingContext.ModelState.AddModelError(bindingContext.ModelName, 
-                    "Max lenght is " + m.Length + " characters");
-            }
-            else if (m.Regex!=null && !m.Regex.IsMatch(val.AttemptedValue))
-            {
-                bindingContext.ModelState.AddModelError(bindingContext.ModelName, 
-                    "Text does not match the expected format: "+m.Regex.ToString());
-            } else 
+            string exmsg = null;
+            try
             {
                 m.Value = val.AttemptedValue;
+            }
+            catch (ArgumentNullException ex)
+            {
+                exmsg = ex.ParamName;
+            }
+            catch (ArgumentOutOfRangeException ex2)
+            {
+                exmsg = ex2.ParamName;
+            }
+            if (exmsg != null)
+            {
+                bindingContext.ModelState.AddModelError(bindingContext.ModelName, exmsg);
             }
             return m;
         }

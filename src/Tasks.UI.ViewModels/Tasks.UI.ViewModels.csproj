@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Home\IMTask.cs" />
     <Compile Include="Home\VMApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Home\VMEdit.cs" />

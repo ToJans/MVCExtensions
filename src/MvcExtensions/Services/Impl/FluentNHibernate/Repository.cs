@@ -7,12 +7,12 @@ using FluentNHibernate;
 using NHibernate.Linq;
 using System.Linq.Expressions;
 
-namespace MvcExtensions.Services.Impl
+namespace MvcExtensions.Services.Impl.FluentNHibernate
 {
     public class Repository : IRepository 
     {
 
-        NHibernate.ISession session { get;set; }
+        protected NHibernate.ISession session { get;set; }
 
         public Repository(IUnitOfWork UnitOfWork)
         {

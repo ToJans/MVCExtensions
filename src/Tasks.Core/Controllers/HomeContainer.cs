@@ -6,7 +6,7 @@ using MvcExtensions.Services;
 using MvcExtensions.Services.Impl;
 using MvcExtensions.UI.Web.Controller;
 
-namespace Tasks.Core.Services.Impl
+namespace Tasks.Core.Controllers
 {
     public class HomeContainer : MvcContainer, IMvcCustomContainer<HomeController>
     {
@@ -52,8 +52,8 @@ namespace Tasks.Core.Services.Impl
                     .ForMember(v => v.AL_CancelEdit, m => m.MapFrom(t => cHome.AL("Cancel changes", c => c.Index())))
                     .ForMember(v => v.AL_PostEdit, m => m.MapFrom(t => cHome.AL("Save changes", c => c.PostEdit(t.Id,null))));
 
-                MapperCfg.CreateMap<IMTask, Task>()
-                    .ForMember(v => v.Name, m => m.MapFrom(t => t.Name))
+                MapperCfg.CreateMap<HomeController.IMTask, Task>()
+                    .ForMember(v => v.Name.Value, m => m.MapFrom(t => t.Name))
                     .ForMember(v => v.Description, m => m.MapFrom(t => t.Description));
             }
         }

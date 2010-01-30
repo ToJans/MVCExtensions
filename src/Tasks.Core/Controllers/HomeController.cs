@@ -4,6 +4,7 @@ using MvcContrib;
 using MvcExtensions.Services;
 using Tasks.Core.Model;
 using Tasks.UI.ViewModels.Home;
+using MvcExtensions.Model;
 
 namespace Tasks.Core.Controllers
 {
@@ -44,6 +45,12 @@ namespace Tasks.Core.Controllers
             ModelState.Merge(FlashModelState);
             var tasks = sRepo.Find<Task>().ToArray();
             return View(sMap.To<VMIndex>().From(tasks,this)); 
+        }
+
+        public class IMTask
+        {
+            public NonEmptyNormalText Name { get; set; }
+            public MemoText Description { get; set; }
         }
 
         public ActionResult AddNewTask(IMTask imtask)
