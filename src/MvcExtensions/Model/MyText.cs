@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace MvcExtensions.Model
 {
-    public abstract class MyText
+    public abstract class MyText 
     {
         private string _value;
         public virtual string Value 
@@ -25,10 +25,10 @@ namespace MvcExtensions.Model
             }
         }
 
-        public virtual int Length { get { return int.MaxValue; } }
-        public virtual bool CanBeEmpty { get { return true; } }
-        public virtual Regex Regex { get { return null; } }
-        public virtual string CustomMessage { get { return null; } }
+        protected virtual int Length { get { return int.MaxValue; } }
+        protected virtual bool CanBeEmpty { get { return true; } }
+        protected virtual Regex Regex { get { return null; } }
+        protected virtual string CustomMessage { get { return null; } }
 
         public MyText()
         {
@@ -72,7 +72,7 @@ namespace MvcExtensions.Model
 
     public class ShortText : MyText 
     {
-        public override int Length {get { return 32; }}
+        protected override int Length {get { return 32; }}
         public ShortText(){ }
         public ShortText(string s) : base(s) { }
         public static implicit operator ShortText(string s) { return new ShortText(s); }
@@ -80,7 +80,7 @@ namespace MvcExtensions.Model
 
     public class NonEmptyShortText : ShortText
     {
-        public override bool CanBeEmpty { get { return false; } }
+        protected override bool CanBeEmpty { get { return false; } }
         public NonEmptyShortText() { }
         public NonEmptyShortText(string s) : base(s) { }
         public static implicit operator NonEmptyShortText(string s) { return new NonEmptyShortText(s); }
@@ -88,7 +88,7 @@ namespace MvcExtensions.Model
 
     public class NormalText : MyText
     {
-        public override int Length { get { return 256; } }
+        protected override int Length { get { return 256; } }
         public NormalText(){ }
         public NormalText(string s) : base(s) { }
         public static implicit operator NormalText(string s) { return new NormalText(s); }
@@ -96,7 +96,7 @@ namespace MvcExtensions.Model
 
     public class NonEmptyNormalText : NormalText
     {
-        public override bool CanBeEmpty { get { return false; } }
+        protected override bool CanBeEmpty { get { return false; } }
         public NonEmptyNormalText(){ }
         public NonEmptyNormalText(string s) : base(s) { }
         public static implicit operator NonEmptyNormalText(string s) { return new NonEmptyNormalText(s); }
@@ -104,7 +104,7 @@ namespace MvcExtensions.Model
 
     public class LongText : MyText
     {
-        public override int Length { get { return 1024; } }
+        protected override int Length { get { return 1024; } }
         public LongText(){ }
         public LongText(string s) : base(s) { }
         public static implicit operator LongText(string s) { return new LongText(s); }
@@ -112,7 +112,7 @@ namespace MvcExtensions.Model
 
     public class NonEmptyLongText : LongText
     {
-        public override bool CanBeEmpty { get { return false; } }
+        protected override bool CanBeEmpty { get { return false; } }
         public NonEmptyLongText(){ }
         public NonEmptyLongText(string s) : base(s) { }
         public static implicit operator NonEmptyLongText(string s) { return new NonEmptyLongText(s); }
@@ -120,7 +120,7 @@ namespace MvcExtensions.Model
 
     public class MemoText : MyText
     {
-        public override int Length { get { return int.MaxValue; } }
+        protected override int Length { get { return int.MaxValue; } }
         public MemoText(){ }
         public MemoText(string s) : base(s) { }
         public static implicit operator MemoText(string s) { return new MemoText(s); }
@@ -128,7 +128,7 @@ namespace MvcExtensions.Model
 
     public class NonEmptyMemoText : MemoText
     {
-        public override bool CanBeEmpty { get { return false; } }
+        protected override bool CanBeEmpty { get { return false; } }
         public NonEmptyMemoText(){ }
         public NonEmptyMemoText(string s) : base(s) { }
         public static implicit operator NonEmptyMemoText(string s) { return new NonEmptyMemoText(s); }

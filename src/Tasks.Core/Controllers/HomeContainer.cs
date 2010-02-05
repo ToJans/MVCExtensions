@@ -53,7 +53,7 @@ namespace Tasks.Core.Controllers
                     .ForMember(v => v.AL_PostEdit, m => m.MapFrom(t => cHome.AL("Save changes", c => c.PostEdit(t.Id,null))));
 
                 MapperCfg.CreateMap<HomeController.IMTask, Task>()
-                    .ForMember(v => v.Name.Value, m => m.MapFrom(t => t.Name))
+                    .ForMember(v => v.Name, m => m.MapFrom(t => t.Name))
                     .ForMember(v => v.Description, m => m.MapFrom(t => t.Description));
             }
         }

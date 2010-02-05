@@ -22,17 +22,50 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
         public Action CreateDB { get; protected set; }
         public Action UpdateDB { get; protected set; }
 
+        protected bool IsConcreteBaseType(Type t)
+        {
+            if (t.BaseType == null) return true;
+            return t.BaseType.IsGenericType ||
+                       t.BaseType.IsAbstract ||
+                       typeof(MyText).IsAssignableFrom(t);
+                       
+        }
+
         protected Database(IPersistenceConfigurer pcfg, IFluentMapping mappings)
         {
+            var  clsmaps = new MappingType[]{MappingType.Normal,MappingType.AsConcreteBase};
             var cfg = Fluently.Configure()
                 .Database(pcfg)
-                .Mappings(m => m.AutoMappings.Add(
-                    mappings.Map()
-                    .Conventions.Add<BitmapUserTypeConvention>()
-                    .Conventions.Add<ColorUserTypeConvention>()
-                    .Setup(c=>c.IsComponentType = t=>t.IsSubclassOf(typeof(MyText)))
-                    ))
-                .BuildConfiguration();
+                .Mappings(m => {
+                    var am1 = AutoMap.Assembly(mappings.ModelAssembly)
+                        .Where(t => clsmaps.Contains( mappings.GetMapType(t)) )
+                        .Conventions.Add<BitmapUserTypeConvention>()
+                        .Conventions.Add<ColorUserTypeConvention>()
+                        .Conventions.Add<CascadeSaveUpdateConvention>()
+                       .Setup(c => {
+                           c.IsComponentType = t => typeof(MyText).IsAssignableFrom(t) || 
+                               mappings.GetMapType(t)== MappingType.Component;
+                           c.IsConcreteBaseType = t => IsConcreteBaseType(t) || 
+                               mappings.GetMapType(t) == MappingType.AsConcreteBase;
+                           c.GetComponentColumnPrefix = pi =>
+                           {
+                               return pi.Name;
+                           };
+                       })
+                       ;
+
+                    
+                    m.AutoMappings.Add(am1);
+
+                    if (mappings.WriteMappingFilesToPath != null)
+                    {
+                        foreach (var v in m.AutoMappings)
+                        {
+                            v.CompileMappings();
+                            v.WriteMappingsTo(mappings.WriteMappingFilesToPath);
+                        }
+                    }
+                }).BuildConfiguration();
             SessionFactory = cfg.BuildSessionFactory();
             LocalSession = SessionFactory.OpenSession();
             CreateDB = () =>

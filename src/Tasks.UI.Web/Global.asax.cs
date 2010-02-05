@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Spark.Web.Mvc;
 using Tasks.Core.Controllers;
-using Tasks.Core.Services.Impl;
 using Tasks.Core.Services;
 using Tasks.Core.Model;
 using Castle.Core;

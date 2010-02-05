@@ -30,6 +30,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Deploy Markomo|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Deploy Markomo\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.1.0.39271, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -87,6 +95,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\NHibernate.Linq\NHibernate.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Security, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\Rhino.Security\Rhino.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Spark, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\Spark\Spark.dll</HintPath>
@@ -128,7 +140,10 @@
   <ItemGroup>
     <Compile Include="Model\IModule.cs" />
     <Compile Include="Model\MyText.cs" />
+    <Compile Include="Services\Impl\FluentNHibernate\CascadeSaveUpdateConvention.cs" />
     <Compile Include="Services\Impl\FluentNHibernate\IFluentMapping.cs" />
+    <Compile Include="Services\Impl\TextGenerator.cs" />
+    <Compile Include="Services\ISecuredRepository.cs" />
     <Compile Include="UI\Web\Controller\ControllerExtensions.cs" />
     <Compile Include="Model\IModelId.cs" />
     <Compile Include="Services\IContextBound.cs" />
@@ -165,6 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Web\View\_validation.spark" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Services\Impl\LoremIpsum.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
