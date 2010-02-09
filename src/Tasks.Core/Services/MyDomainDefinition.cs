@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Tasks.Core.Services
 {
-    public class TaskDatabaseFluentMapping : IDomainDefinition 
+    public class MyDomainDefinition : IDomainDefinition 
     {
 
         public Assembly DomainAssembly 

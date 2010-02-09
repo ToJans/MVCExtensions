@@ -44,8 +44,7 @@ namespace Tasks.Core.Controllers
                 MapperCfg.CreateMap<ModelStateDictionary, VMIndex>()
                     .ForMember(v => v.Name, m => m.MapFrom(c => c["Name"].Value.RawValue))
                     .ForMember(v => v.Contact, m => m.MapFrom(c => c["Contact"].Value.RawValue))
-                    .ForMember(v => v.Description, m => m.MapFrom(c => c["Description"].Value.RawValue))
-                    ;
+                    .ForMember(v => v.Description, m => m.MapFrom(c => c["Description"].Value.RawValue));
 
                 MapperCfg.CreateMap<HomeController, VMEdit>()
                     .ForMember(v => v.FlashMessage, m => m.MapFrom(c => c.FlashMessage))

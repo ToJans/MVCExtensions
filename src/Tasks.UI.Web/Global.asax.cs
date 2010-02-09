@@ -41,7 +41,7 @@ namespace Tasks.UI.Web
 
         private Database GetDb()
         {
-            var mappings = new TaskDatabaseFluentMapping();
+            var mappings = new MyDomainDefinition();
             var fn = Server.MapPath("~/app_data/tasks.db");
             var db = new SqlLiteDatabase(fn, mappings);
             if (!File.Exists(fn))
