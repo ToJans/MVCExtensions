@@ -4,12 +4,19 @@
     Edit
 </content>
 <content name="Main">
-        <h3>Edit this task</h3>
+    <h3>Edit this task</h3>
+    <div class="taskbox" >
         <al_form al="Model.AL_PostEdit">
-            <label for="Name">Name :</label><br/>
-            <input type="text" value="${Model.Name}" name="Name" />
-            <label for="Description">Description:</label>
-            <textarea cols="20" rows="2" name="Description" >${Model.Description}</textarea>
+            <label for="Name">Name</label>
+            <input type="text" name="Name" value="${Model.NameValue}" />
+            <validation src="'Name'" />
+            <label for="Contact">Contact:</label>
+            <input type="text" value="${Model.ContactValue}" name="Contact" />
+            <validation src="'Contact'" />
+            <label for="Description">Description</label>
+            <textarea name="Description" value="${Model.DescriptionValue}"></textarea>
+            <validation src="'Description'" />
         </al_form>
-        <al_a al="Model.AL_CancelEdit" />
+    </div>
+    <al_a al="Model.AL_CancelEdit" />
 </content>

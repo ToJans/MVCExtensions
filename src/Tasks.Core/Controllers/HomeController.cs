@@ -1,10 +1,14 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using MvcContrib;
+using MvcContrib.Filters;
+using MvcExtensions.Model;
 using MvcExtensions.Services;
 using Tasks.Core.Model;
+using Tasks.Core.Model.Component;
 using Tasks.UI.ViewModels.Home;
-using MvcExtensions.Model;
+using MvcExtensions.UI.Web.Controller;
+
 
 namespace Tasks.Core.Controllers
 {
@@ -14,12 +18,6 @@ namespace Tasks.Core.Controllers
         IMapper sMap;
         IRepository sRepo;
         IUnitOfWork sUnitOfWork;
-
-        ModelStateDictionary FlashModelState
-        {
-            get { return (ModelStateDictionary)TempData["mstate"]; }
-            set { TempData["mstate"] = value; }
-        }
 
         public string FlashMessage
         {
@@ -40,33 +38,37 @@ namespace Tasks.Core.Controllers
             this.sUnitOfWork = sUnitOfWork;
         }
 
-        public ActionResult Index()
-        {
-            ModelState.Merge(FlashModelState);
-            var tasks = sRepo.Find<Task>().ToArray();
-            return View(sMap.To<VMIndex>().From(tasks,this)); 
-        }
-
         public class IMTask
         {
             public NonEmptyNormalText Name { get; set; }
             public MemoText Description { get; set; }
+            public EmailText Contact { get; set; }
         }
 
-        public ActionResult AddNewTask(IMTask imtask)
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var tasks = sRepo.Find<Task>().ToArray();
+            return View(sMap.To<VMIndex>().From(tasks, this));
+        }
+
+        [HttpPost]
+        public ActionResult Index(IMTask im)
         {
             if (!ModelState.IsValid)
             {
-                FlashModelState = ModelState;
                 FlashError = "Unable to save task";
-                return this.RedirectToAction(c => c.Index());
+                var tasks = sRepo.Find<Task>().ToArray();
+                return View(sMap.To<VMIndex>().From(tasks,ModelState));
             }
-            var task = sMap.To<Task>().From(imtask);
-
-            sRepo.SaveOrUpdate(task);
-            FlashMessage = "Task \"" + task.Name + "\" saved";
-            sUnitOfWork.Commit();
-            return this.RedirectToAction(c => c.Index());
+            else
+            {
+                var task = sMap.To<Task>().From(im);
+                sRepo.SaveOrUpdate(task);
+                FlashMessage = "Task \"" + task.Name + "\" saved";
+                sUnitOfWork.Commit();
+                return this.RedirectToAction(x => x.Index());
+            }
         }
 
         public ActionResult SwitchStatus(int id)
@@ -76,21 +78,22 @@ namespace Tasks.Core.Controllers
             sRepo.SaveOrUpdate(task);
             sUnitOfWork.Commit();
             FlashMessage = "Task \"" + task.Name + "\" updated";
-            return this.RedirectToAction(c => c.Index());
+            return this.RedirectToAction(c => c.Index(null));
         }
 
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            ModelState.Merge(FlashModelState);
             var task = sRepo.GetById<Task>(id);
-            return View(sMap.To<VMEdit>().From(task,this));
+            return View(sMap.To<VMEdit>().From(task, this));
         }
 
-        public ActionResult PostEdit(int id,IMTask imTask)
+        [HttpPost]
+        public ActionResult Edit(int id,IMTask imTask)
         {
+            var task = sRepo.GetById<Task>(id);
             if (ModelState.IsValid)
             {
-                var task = sRepo.GetById<Task>(id);
                 sMap.Map(imTask, task);
                 sRepo.SaveOrUpdate(task);
                 FlashMessage = "Task \"" + task.Name + "\" saved";
@@ -99,10 +102,9 @@ namespace Tasks.Core.Controllers
             }
             else
             {
-                FlashModelState = ModelState;
                 FlashError = "Unable to save task";
-                return this.RedirectToAction(c => c.Edit(id));
             }
+            return View(sMap.To<VMEdit>().From(task,this));
         }
 
         public ActionResult Delete(int id)

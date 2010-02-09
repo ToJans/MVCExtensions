@@ -1,0 +1,30 @@
+h1. Welcome to the MVCExtensions wiki!
+
+_MvcExtensions_ tries to be the "_Ruby on Rails_":http://rubyonrails.org/ of Asp.NET MVCdevelopment.
+
+When you build a new ASP.Net application, you typically need some extra components in order to get started (an ORM, DI container, ...)
+In _Ruby on Rails_ you do not *need* to setup a single component to get started; basic functionality is available out of the box.
+_MvcExtensions_ does the same by providing a reusable bootstrapper which sets up an @ORM@, a @DI container@ and the @Spark viewengine@.
+
+This makes building new apps a breeze, since all the (default) wiring is done by us.
+
+h1. About 
+* "Presentation: What is MvcExtensions":http://docs.google.com/present/view?id=dgt3mk3c_6fmhrd9c5
+* "A blog post explaining the guts":http://www.corebvba.be/blog/post/Build-aspnet-MVC-applications-FAST-with-MVCExtensions-v04.aspx
+
+h1. How to get started ?
+
+  *NOTE: The @IDomainDefinition@ modification has not been checked in yet; I first need to adapt the example app. You currently still have to use the fluentnhibernate automapper syntax.*
+
+These are the basic steps :
+# Create a new ASP.Net MVC project
+# Reference the MvcExtensions DLL
+# Define your model classes where every public property or  function should be @virtual@ and have an @int id@ (i.e. implement @IModelId@)
+# Tell MvcExtensions where to find these classes by using a very simple interface: @IDomainDefinition@
+# Init  the mvcextensions lib by registering your @Database@ & @IDomainDefinition@ and all @IOC dependencies@ in @global.asax@ 
+# You are ready to go
+
+There is a lot more to this project, but this is all you need to get started. You can find more info in the following articles:
+* "A screencast":http://www.corebvba.be/blog/post/Screencast-Build-an-Aspnet-MVC-application-quickly-using-MVCExtensions.aspx
+* "All the required code/steps in a single overview":http://www.corebvba.be/blog/post/Teaser-on-my-upcoming-mvcextensions-project-release.aspx
+* [[Proper responsibilities]]: Defining ActionLinks in the controller instead of the view.

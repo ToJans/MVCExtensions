@@ -1,29 +1,28 @@
-﻿using MvcExtensions.Services.Impl;
-using FluentNHibernate.Automapping;
+﻿using MvcExtensions.Services;
 using System.Reflection;
 
 namespace Tasks.Core.Services
 {
-    public class TaskDatabaseFluentMapping : IFluentMapping
+    public class TaskDatabaseFluentMapping : IDomainDefinition 
     {
 
-        public Assembly ModelAssembly
+        public Assembly DomainAssembly 
         {
             get { return typeof(Model.Task).Assembly; }
         }
 
-
-        public MappingType GetMapType(System.Type t)
+        public DomainType GetDomainType(System.Type t)
         {
             if (t.Namespace == typeof(Model.Task).Namespace)
-                return MappingType.Normal;
-            // else if some condition
-            //    return MappingType.Component
-            else return MappingType.None;
+                return DomainType.Class;
+            else if (t.Namespace == typeof(Model.Component.EmailText).Namespace)
+                return DomainType.Component;
+            else return DomainType.None;
+            // not used here : DomainType.ClassWithoutBaseClass
         }
 
 
-        public string WriteMappingFilesToPath
+        public string WriteHbmFilesToPath
         {
             get { return null; }
         }

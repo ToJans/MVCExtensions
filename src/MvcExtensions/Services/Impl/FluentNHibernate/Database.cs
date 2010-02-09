@@ -31,22 +31,22 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                        
         }
 
-        protected Database(IPersistenceConfigurer pcfg, IFluentMapping mappings)
+        protected Database(IPersistenceConfigurer pcfg, IDomainDefinition mappings)
         {
-            var  clsmaps = new MappingType[]{MappingType.Normal,MappingType.AsConcreteBase};
+            var  clsmaps = new DomainType[]{DomainType.Class,DomainType.ClassWithoutBaseClass};
             var cfg = Fluently.Configure()
                 .Database(pcfg)
                 .Mappings(m => {
-                    var am1 = AutoMap.Assembly(mappings.ModelAssembly)
-                        .Where(t => clsmaps.Contains( mappings.GetMapType(t)) )
+                    var am1 = AutoMap.Assembly(mappings.DomainAssembly)
+                        .Where(t => clsmaps.Contains( mappings.GetDomainType(t)) )
                         .Conventions.Add<BitmapUserTypeConvention>()
                         .Conventions.Add<ColorUserTypeConvention>()
-                        .Conventions.Add<CascadeSaveUpdateConvention>()
+                        .Conventions.Add<CascadeSaveOrUpdateConvention>()
                        .Setup(c => {
                            c.IsComponentType = t => typeof(MyText).IsAssignableFrom(t) || 
-                               mappings.GetMapType(t)== MappingType.Component;
+                               mappings.GetDomainType(t)== DomainType.Component;
                            c.IsConcreteBaseType = t => IsConcreteBaseType(t) || 
-                               mappings.GetMapType(t) == MappingType.AsConcreteBase;
+                               mappings.GetDomainType(t) == DomainType.ClassWithoutBaseClass;
                            c.GetComponentColumnPrefix = pi =>
                            {
                                return pi.Name;
@@ -57,12 +57,12 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                     
                     m.AutoMappings.Add(am1);
 
-                    if (mappings.WriteMappingFilesToPath != null)
+                    if (mappings.WriteHbmFilesToPath != null)
                     {
                         foreach (var v in m.AutoMappings)
                         {
                             v.CompileMappings();
-                            v.WriteMappingsTo(mappings.WriteMappingFilesToPath);
+                            v.WriteMappingsTo(mappings.WriteHbmFilesToPath);
                         }
                     }
                 }).BuildConfiguration();
@@ -100,7 +100,7 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
 
     public class SqlLiteInMemoryDatabase : Database
     {
-        public SqlLiteInMemoryDatabase(IFluentMapping mappings) : base(SQLiteConfiguration.Standard.InMemory(),mappings)
+        public SqlLiteInMemoryDatabase(IDomainDefinition mappings) : base(SQLiteConfiguration.Standard.InMemory(),mappings)
         {
             CreateDB();
         }
@@ -115,7 +115,7 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
 
     public class SqlLiteDatabase : Database
     {
-        public SqlLiteDatabase(string filename,IFluentMapping mappings) : base(SQLiteConfiguration.Standard.UsingFile(filename),mappings) 
+        public SqlLiteDatabase(string filename,IDomainDefinition mappings) : base(SQLiteConfiguration.Standard.UsingFile(filename),mappings) 
         { 
         }
 
@@ -130,7 +130,7 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
 
     public class Sql2005Database : Database
     {
-        public Sql2005Database(string connectionstring, IFluentMapping mappings) :
+        public Sql2005Database(string connectionstring, IDomainDefinition mappings) :
             base(MsSqlConfiguration.MsSql2005
             .ConnectionString(connectionstring)
             , mappings)

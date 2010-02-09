@@ -37,6 +37,8 @@ namespace MvcExtensions.UI.Web.ModelBinders
             {
                 bindingContext.ModelState.AddModelError(bindingContext.ModelName, exmsg);
             }
+            if (val != null)
+                bindingContext.ModelState.SetModelValue(bindingContext.ModelName, new ValueProviderResult(val.AttemptedValue, val.AttemptedValue, null));
             return m;
         }
 

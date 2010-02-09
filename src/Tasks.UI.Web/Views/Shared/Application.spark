@@ -35,7 +35,7 @@
     <div class="FlashMessage">${Model.FlashMessage}</div>
     <div class="content">
         <div class="taskcontainer">
-            <h1>Simple task list</h1>
+            <h1>Simple task list v0.2</h1>
             <use content="Main" />
         </div>
          <div class="footer">

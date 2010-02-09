@@ -11,7 +11,8 @@
         <else>
             <div class="taskbox" each="var t in Model.AllTasks">
                 <div class="name"><al_a al="t.Name" /></div>
-                <div class="description">${t.Description}</div>
+                <div class="sendmail"><a href="mailto://${t.ContactValue}">${t.ContactValue}</a></div>
+                <div class="description">${t.DescriptionValue}</div>
                 <div class="status"><al_a al="t.AL_Status" /></div>
                 <div class="delete"><al_a al="t.AL_Delete" /> </div>
             </div>
@@ -20,10 +21,13 @@
     <div class="taskbox" >
         <al_form al="Model.AL_AddTask">
             <label for="Name">Name</label>
-            <input type="text" name="Name" />
+            <input type="text" name="Name" value="${Model.Name}"/>
             <validation src="'Name'" />
+            <label for="Contact">Contact:</label>
+            <input type="text"  name="Contact" value="${Model.Contact}" />
+            <validation src="'Contact'" />
             <label for="Description">Description</label>
-            <textarea name="Description"></textarea>
+            <textarea name="Description" >${Model.Description}</textarea>
             <validation src="'Description'" />
         </al_form>
     </div>

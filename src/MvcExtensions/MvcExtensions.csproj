@@ -140,8 +140,8 @@
   <ItemGroup>
     <Compile Include="Model\IModule.cs" />
     <Compile Include="Model\MyText.cs" />
-    <Compile Include="Services\Impl\FluentNHibernate\CascadeSaveUpdateConvention.cs" />
-    <Compile Include="Services\Impl\FluentNHibernate\IFluentMapping.cs" />
+    <Compile Include="Services\Impl\FluentNHibernate\CascadeSaveOrUpdateConvention.cs" />
+    <Compile Include="Services\IDomainDefinition.cs" />
     <Compile Include="Services\Impl\TextGenerator.cs" />
     <Compile Include="Services\ISecuredRepository.cs" />
     <Compile Include="UI\Web\Controller\ControllerExtensions.cs" />
@@ -167,6 +167,7 @@
     <Compile Include="Services\Impl\MvcMapper.cs" />
     <Compile Include="Services\Impl\MvcContainerControllerFactory.cs" />
     <Compile Include="Services\IRepository.cs" />
+    <Compile Include="UI\Web\Controller\FlashInvalidModelStateAttribute.cs" />
     <Compile Include="UI\Web\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\ViewModel\VMActionLink.cs" />

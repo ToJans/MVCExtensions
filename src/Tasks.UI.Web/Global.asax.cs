@@ -14,6 +14,7 @@ using MvcExtensions.Services;
 using MvcExtensions.Services.Impl;
 using MvcExtensions.Services.Impl.FluentNHibernate;
 using System.IO;
+using Tasks.Core.Model.Component;
 
 namespace Tasks.UI.Web
 {
@@ -62,6 +63,7 @@ namespace Tasks.UI.Web
                 Component.For<IMvcCustomContainer<HomeController>>().ImplementedBy<HomeContainer>().LifeStyle.Transient
             );
 
+            module.RegisterClassDerivedFromMyTextInModelBinder(typeof(EmailText));
             ControllerBuilder.Current.DefaultNamespaces.Add("Tasks.Core.Controllers");
         }
     }

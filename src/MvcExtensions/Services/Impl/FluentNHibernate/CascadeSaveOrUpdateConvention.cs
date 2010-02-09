@@ -7,7 +7,7 @@ using FluentNHibernate.Conventions.Instances;
 
 namespace MvcExtensions.Services.Impl.FluentNHibernate
 {
-    public class CascadeSaveUpdateConvention : IHasOneConvention, IHasManyConvention, IReferenceConvention
+    public class CascadeSaveOrUpdateConvention : IHasOneConvention, IHasManyConvention, IReferenceConvention
     {
         public void Apply(IOneToOneInstance instance)
         {

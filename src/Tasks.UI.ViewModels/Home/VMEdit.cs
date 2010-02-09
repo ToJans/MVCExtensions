@@ -8,8 +8,9 @@ namespace Tasks.UI.ViewModels.Home
 {
     public class VMEdit:VMApplication
     {
-        public string Name;
-        public string Description;
+        public string NameValue;
+        public string DescriptionValue;
+        public string ContactValue;
         public VMActionLink AL_PostEdit;
         public VMActionLink AL_CancelEdit;
     }

@@ -26,7 +26,7 @@
    background-color:#EEEEFF;
    margin:10px;
    width:390px;
-   height:100px;
+   height:140px;
    display:inline-block;
    padding:5px;
 }
@@ -48,6 +48,13 @@
 {
     font-weight:bolder;
     font-size:larger;
+    float:left;
+    display:inline-block;
+    width:auto;
+}
+.taskbox .sendmail
+{
+    float:right;
 }
 
 .taskbox .description
