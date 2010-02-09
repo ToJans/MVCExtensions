@@ -1,4 +1,4 @@
-h1. Welcome to the MVCExtensions wiki!
+h1. Welcome to the MVCExtensions project
 
 _MvcExtensions_ tries to be the "_Ruby on Rails_":http://rubyonrails.org/ of Asp.NET MVCdevelopment.
 
@@ -13,8 +13,6 @@ h1. About
 * "A blog post explaining the guts":http://www.corebvba.be/blog/post/Build-aspnet-MVC-applications-FAST-with-MVCExtensions-v04.aspx
 
 h1. How to get started ?
-
-  *NOTE: The @IDomainDefinition@ modification has not been checked in yet; I first need to adapt the example app. You currently still have to use the fluentnhibernate automapper syntax.*
 
 These are the basic steps :
 # Create a new ASP.Net MVC project
