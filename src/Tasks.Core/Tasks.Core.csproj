@@ -93,10 +93,9 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeContainer.cs" />
-    <Compile Include="Model\Component\EmailText.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\TaskDatabaseFluentMapping.cs" />
+    <Compile Include="Services\MyDomainDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvcExtensions\MvcExtensions.csproj">

@@ -1,5 +1,4 @@
 ﻿using MvcExtensions.Model;
-using Tasks.Core.Model.Component;
 
 namespace Tasks.Core.Model
 {

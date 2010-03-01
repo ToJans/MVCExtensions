@@ -38,14 +38,19 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                 .Database(pcfg)
                 .Mappings(m => {
                     var am1 = AutoMap.Assembly(mappings.DomainAssembly)
-                        .Where(t => clsmaps.Contains( mappings.GetDomainType(t)) )
+                        .Where(t => clsmaps.Contains(mappings.GetDomainType(t)))
                         .Conventions.Add<BitmapUserTypeConvention>()
                         .Conventions.Add<ColorUserTypeConvention>()
                         .Conventions.Add<CascadeSaveOrUpdateConvention>()
-                       .Setup(c => {
-                           c.IsComponentType = t => typeof(MyText).IsAssignableFrom(t) || 
-                               mappings.GetDomainType(t)== DomainType.Component;
-                           c.IsConcreteBaseType = t => IsConcreteBaseType(t) || 
+                        .OverrideAll(pig =>
+                        {
+                            pig.IgnoreProperties(pi => pi.Name == "Value" && pi.ReflectedType.BaseType == typeof (MyValidatedXlatText));
+                        })
+                       .Setup(c =>
+                       {
+                           c.IsComponentType = t => typeof(MyText).IsAssignableFrom(t) ||
+                               mappings.GetDomainType(t) == DomainType.Component;
+                           c.IsConcreteBaseType = t => IsConcreteBaseType(t) ||
                                mappings.GetDomainType(t) == DomainType.ClassWithoutBaseClass;
                            c.GetComponentColumnPrefix = pi =>
                            {

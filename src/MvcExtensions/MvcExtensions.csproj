@@ -144,6 +144,7 @@
     <Compile Include="Services\IDomainDefinition.cs" />
     <Compile Include="Services\Impl\TextGenerator.cs" />
     <Compile Include="Services\ISecuredRepository.cs" />
+    <Compile Include="UI\Web\ActionFilters\SetCultureAttribute.cs" />
     <Compile Include="UI\Web\Controller\ControllerExtensions.cs" />
     <Compile Include="Model\IModelId.cs" />
     <Compile Include="Services\IContextBound.cs" />
@@ -154,7 +155,7 @@
     <Compile Include="Services\Impl\IOC.cs" />
     <Compile Include="Services\Impl\FluentNHibernate\Repository.cs" />
     <Compile Include="Services\Impl\FluentNHibernate\UnitOfWork.cs" />
-    <Compile Include="Services\Impl\Binders\HttpContextBoundObject.cs" />
+    <Compile Include="Services\Impl\Converters\HttpContextBoundObject.cs" />
     <Compile Include="Services\Impl\NHibernateUserTypes\BitmapUserType.cs" />
     <Compile Include="Services\Impl\NHibernateUserTypes\ColorUserType.cs" />
     <Compile Include="Services\IUnitOfWork.cs" />
@@ -184,6 +185,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Services\Impl\LoremIpsum.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Impl\Binders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

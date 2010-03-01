@@ -15,10 +15,9 @@ namespace Tasks.Core.Services
         {
             if (t.Namespace == typeof(Model.Task).Namespace)
                 return DomainType.Class;
-            else if (t.Namespace == typeof(Model.Component.EmailText).Namespace)
-                return DomainType.Component;
             else return DomainType.None;
-            // not used here : DomainType.ClassWithoutBaseClass
+            // not used here : DomainType.ClassWithoutBaseClass, DomainType.Component
+            
         }
 
 
