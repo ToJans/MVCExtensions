@@ -17,10 +17,10 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
     public abstract class Database : IUnitOfWorkFactory 
     {
         protected ISessionFactory SessionFactory;
-        protected static ISession LocalSession;
-
+        protected ISession LocalSession;
         public Action CreateDB { get; protected set; }
         public Action UpdateDB { get; protected set; }
+        public Action DropDB { get; protected set; }
 
         protected bool IsConcreteBaseType(Type t)
         {
@@ -42,10 +42,7 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                         .Conventions.Add<BitmapUserTypeConvention>()
                         .Conventions.Add<ColorUserTypeConvention>()
                         .Conventions.Add<CascadeSaveOrUpdateConvention>()
-                        .OverrideAll(pig =>
-                        {
-                            pig.IgnoreProperties(pi => pi.Name == "Value" && pi.ReflectedType.BaseType == typeof (MyValidatedXlatText));
-                        })
+                        .Conventions.Add<MyTextTypeConvention>()
                        .Setup(c =>
                        {
                            c.IsComponentType = t => typeof(MyText).IsAssignableFrom(t) ||
@@ -57,10 +54,18 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                                return pi.Name;
                            };
                        })
+                       .OverrideAll(pig =>
+                       {
+                           pig.IgnoreProperties(pi => pi.Name == "Value" && pi.ReflectedType.BaseType == typeof(MyValidatedXlatText));
+                       });
                        ;
+                    am1.GetType().GetMethod("UseOverridesFromAssemblyOf").MakeGenericMethod(mappings.GetType()).Invoke(am1,null);
+                    am1.Alterations(a => {
+                        a.GetType().GetMethod("AddFromAssemblyOf").MakeGenericMethod(mappings.GetType()).Invoke(a, null);
+                    });
 
-                    
                     m.AutoMappings.Add(am1);
+
 
                     if (mappings.WriteHbmFilesToPath != null)
                     {
@@ -72,14 +77,19 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                     }
                 }).BuildConfiguration();
             SessionFactory = cfg.BuildSessionFactory();
-            LocalSession = SessionFactory.OpenSession();
+            
             CreateDB = () =>
             {
+                LocalSession = LocalSession??SessionFactory.OpenSession();
                 new SchemaExport(cfg).Execute(false, true, false, LocalSession.Connection, null);
             };
             UpdateDB = () =>
             {
                 new SchemaUpdate(cfg).Execute(false, true);
+            };
+            DropDB = () =>
+            {
+                new SchemaExport(cfg).Drop(true, true);
             };
         }
 
@@ -113,6 +123,7 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
         {
             get
             {
+                LocalSession = LocalSession ?? SessionFactory.OpenSession();
                 return new UnitOfWork(() => LocalSession, false, true); 
             }
         }

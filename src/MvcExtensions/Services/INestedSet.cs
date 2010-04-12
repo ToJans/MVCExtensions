@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MvcExtensions.View
+namespace MvcExtensions.Services
 {
-    class ViewRender
+    public interface INestedSet
     {
+        
     }
 }

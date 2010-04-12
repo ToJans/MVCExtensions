@@ -107,6 +107,7 @@ namespace MvcExtensions.Model
             Validate(value,true);
             base.DoSetValue(value);
         }
+
     }
 
     public abstract class MyValidatedXlatText : MyValidatedText
@@ -207,11 +208,19 @@ namespace MvcExtensions.Model
     public class LongText : MyValidatedText
     {
         public LongText() : base(x => x.IsLengthSmallerThen(1024)) { }
+        public static implicit operator LongText(string value)
+        {
+            return new LongText() { Value = value };
+        }
     }
 
     public class NonEmptyLongText : MyValidatedText
     {
         public NonEmptyLongText() : base(x => x.IsNotEmpty(), x => x.IsLengthSmallerThen(1024)) { }
+        public static implicit operator NonEmptyLongText(string value)
+        {
+            return new NonEmptyLongText() { Value = value };
+        }
     }
 
     public class MemoText : MyValidatedText

@@ -90,15 +90,20 @@ namespace MvcExtensions.UI.Web.ActionFilters
                                                          .HttpContext
                                                          .Request
                                                          .UserLanguages;
-
-            foreach (var thisBrowserLanguage in BrowserLanguages)
+            try
             {
-                foreach (var thisCultureLanguage in Cultures)
+                foreach (var thisBrowserLanguage in BrowserLanguages)
                 {
-                    if (!thisBrowserLanguage.StartsWith(thisCultureLanguage))
-                        continue;
-                    return thisCultureLanguage;
+                    foreach (var thisCultureLanguage in Cultures)
+                    {
+                        if (!thisBrowserLanguage.StartsWith(thisCultureLanguage))
+                            continue;
+                        return thisCultureLanguage;
+                    }
                 }
+            }
+            catch(Exception)
+            {
             }
             return string.Empty;
         }

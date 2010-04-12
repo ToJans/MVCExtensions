@@ -10,6 +10,8 @@ using MvcExtensions.Services.Impl;
 using Castle.MicroKernel.Registration;
 using MvcExtensions.Services.Impl.FluentNHibernate;
 using MvcExtensions.UI.Web.ModelBinders;
+using MvcExtensions.UI.Web.Controller;
+using Spark;
 
 namespace MvcExtensions.UI.Web
 {
@@ -38,11 +40,14 @@ namespace MvcExtensions.UI.Web
 
         public void Register(Database database) 
         {
-            var settings = new Spark.SparkSettings();
-            settings.AddAssembly(this.GetType().Assembly);
-            settings.SetAutomaticEncoding(true);
+            var settings = new Spark.SparkSettings()
+                .AddAssembly(this.GetType().Assembly)
+                .SetAutomaticEncoding(true)
+                .SetDebug(true)
+                .AddNamespace(typeof(MvcExtensions.UI.Web.Helpers.HTMLHelperExtensions).Namespace)
+                .AddNamespace(typeof(MvcExtensions.UI.ViewModel.VMActionLink).Namespace);
             var spv = new SparkViewFactory(settings);
-            var path = "MvcExtensions.UI.Web.View";
+            var path = "MvcExtensions.UI.Web.Views";
             spv.AddEmbeddedResources(this.GetType().Assembly,path);
             ViewEngines.Engines.Add(spv);
 
@@ -53,7 +58,9 @@ namespace MvcExtensions.UI.Web
             cont.AddFacility<Castle.Facilities.FactorySupport.FactorySupportFacility>();
 
             foreach (var t in this.GetType().Assembly.GetExportedTypes()
-                .Where(tp => tp.Namespace == typeof(ShortText).Namespace && !tp.IsAbstract))
+                .Where(tp => tp.Namespace == typeof(ShortText).Namespace 
+                        && !tp.IsAbstract 
+                        && typeof(MyText).IsAssignableFrom(tp)))
             {
                 RegisterClassDerivedFromMyTextInModelBinder(t);
             }
