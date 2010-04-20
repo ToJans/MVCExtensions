@@ -56,14 +56,21 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                        })
                        .OverrideAll(pig =>
                        {
-                           pig.IgnoreProperties(pi => pi.Name == "Value" && pi.ReflectedType.BaseType == typeof(MyValidatedXlatText));
+                           pig.IgnoreProperties(pi => pi.Name == "Value" &&
+                               typeof(MyValidatedXlatText).IsAssignableFrom(pi.MemberInfo.ReflectedType));
                        });
-                       ;
+                    var types = mappings.DomainAssembly.GetTypes().Where(x => 
+                                typeof(IVersionAware).IsAssignableFrom(x) && 
+                                mappings.GetDomainType(x) != DomainType.None);
+                    if (types.Count()>0)
+                    {
+                        am1.OverrideInterface<IVersionAware,VersionAwareInterfaceMap>(types);
+                        am1.Add(new VersionFilter());
+                    }
                     am1.GetType().GetMethod("UseOverridesFromAssemblyOf").MakeGenericMethod(mappings.GetType()).Invoke(am1,null);
                     am1.Alterations(a => {
                         a.GetType().GetMethod("AddFromAssemblyOf").MakeGenericMethod(mappings.GetType()).Invoke(a, null);
                     });
-
                     m.AutoMappings.Add(am1);
 
 
@@ -71,11 +78,12 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                     {
                         foreach (var v in m.AutoMappings)
                         {
-                            v.CompileMappings();
+                            v.BuildMappings();
                             v.WriteMappingsTo(mappings.WriteHbmFilesToPath);
                         }
                     }
-                }).BuildConfiguration();
+                })
+                .BuildConfiguration();
             SessionFactory = cfg.BuildSessionFactory();
             
             CreateDB = () =>

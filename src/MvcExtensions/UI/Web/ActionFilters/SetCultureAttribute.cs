@@ -115,8 +115,9 @@ namespace MvcExtensions.UI.Web.ActionFilters
             {
                 "nl-NL"
                 ,"fr-FR"
-                //,"en-US"
-                //,"de-DE"
+                ,"en-US"
+                ,"de-DE"
+                ,"pl-PL"
             };
 
             var x = filterContext.HttpContext.Request.Form["culture"];

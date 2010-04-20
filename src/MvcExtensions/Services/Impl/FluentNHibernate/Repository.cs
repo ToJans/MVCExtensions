@@ -14,6 +14,8 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
 
         protected NHibernate.ISession session { get;set; }
 
+        protected List<Action<NHibernate.ICriteria>> Filters = new List<Action<NHibernate.ICriteria>>();
+
         public Repository(IUnitOfWork UnitOfWork)
         {
             this.session = UnitOfWork.Session;
@@ -41,6 +43,8 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
         {
             var criteria = session.CreateCriteria<T>();
             filter(criteria);
+            foreach (var cr in Filters)
+                cr(criteria);
             return criteria.List<T>().AsQueryable();
         }
 
@@ -56,5 +60,10 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
         }
 
         #endregion
+
+        public void SetFilter<I>(Predicate<I> check)
+        {
+
+        }
     }
 }

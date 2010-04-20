@@ -4,7 +4,7 @@ using Castle.MicroKernel.Registration;
 
 namespace MvcExtensions.Services.Impl
 {
-    public class MvcContainer : WindsorContainer, IMvcContainer
+    public class MvcContainer : WindsorContainer
     {
         public MvcContainer()
         {

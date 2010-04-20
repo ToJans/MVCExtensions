@@ -83,15 +83,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\MvcContrib\MvcContrib.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\FluentNHibernate\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\FluentNHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.Linq, Version=1.0.0.4000, Culture=neutral, PublicKeyToken=444cf6a87fdab271, processorArchitecture=MSIL">
+    <Reference Include="NHibernate.Linq, Version=1.1.0.1001, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\NHibernate.Linq\NHibernate.Linq.dll</HintPath>
     </Reference>
@@ -142,9 +142,11 @@
     <Compile Include="Model\IModule.cs" />
     <Compile Include="Model\MyText.cs" />
     <Compile Include="Services\Dynamic.cs" />
+    <Compile Include="Services\Impl\FluentNHibernate\OverrideInterface.cs" />
     <Compile Include="Services\Impl\FluentNHibernate\CascadeSaveOrUpdateConvention.cs" />
     <Compile Include="Services\IDomainDefinition.cs" />
     <Compile Include="Services\Impl\FluentNHibernate\MyTextAlteration.cs" />
+    <Compile Include="Services\Impl\FluentNHibernate\VersionFilterOverride.cs" />
     <Compile Include="Services\Impl\TextGenerator.cs" />
     <Compile Include="Services\INestedSet.cs" />
     <Compile Include="Services\INHibernateRepository.cs" />

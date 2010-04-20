@@ -114,7 +114,7 @@ namespace MvcExtensions.Model
     {
         protected MyValidatedXlatText(params Func<string, string>[] ValidationChecks) : base(ValidationChecks)
         {
-            _values = new string[] { null, null, null, null };
+            _values = new string[] { null, null, null, null,null };
         }
 
         protected override int GetValueIndex
@@ -127,6 +127,7 @@ namespace MvcExtensions.Model
                     case "fr": return 1; break;
                     case "en": return 2; break;
                     case "de": return 3; break;
+                    case "pl": return 4; break;
                     default: return 0;
                 }
             }
@@ -151,6 +152,7 @@ namespace MvcExtensions.Model
         public virtual string FR { get { return _values[1]; } set { _values[1] = value; } }
         public virtual string EN { get { return _values[2]; } set { _values[2] = value; } }
         public virtual string DE { get { return _values[3]; } set { _values[3] = value; } }
+        public virtual string PL { get { return _values[4]; } set { _values[4] = value; } }
     }
 
     public class ShortText : MyValidatedText 
