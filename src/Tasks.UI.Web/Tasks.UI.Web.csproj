@@ -170,6 +170,10 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MvcExtensions.Web\MvcExtensions.Web.csproj">
+      <Project>{8ED63E29-15B0-4EE3-B049-455962878B9C}</Project>
+      <Name>MvcExtensions.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MvcExtensions\MvcExtensions.csproj">
       <Project>{77ED8A2E-2E20-4AE7-AECA-9782FB83B951}</Project>
       <Name>MvcExtensions</Name>

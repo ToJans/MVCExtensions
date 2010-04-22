@@ -14,6 +14,10 @@ using MvcExtensions.Services;
 using MvcExtensions.Services.Impl;
 using MvcExtensions.Services.Impl.FluentNHibernate;
 using System.IO;
+using MvcExtensions.FNHModules.AuditInfo;
+using MvcExtensions;
+using MvcExtensions.Web;
+using MvcExtensions.Web.Services;
 
 namespace Tasks.UI.Web
 {
@@ -38,9 +42,9 @@ namespace Tasks.UI.Web
             );
         }
 
-        private Database GetDb()
+        private Database GetDb(IUsernameProvider prov)
         {
-            var mappings = new MyDomainDefinition();
+            var mappings = new MyDomainDefinition(prov);
             var fn = Server.MapPath("~/app_data/tasks.db");
             var db = new SqlLiteDatabase(fn, mappings);
             if (!File.Exists(fn))
@@ -54,12 +58,15 @@ namespace Tasks.UI.Web
         {
             RegisterRoutes(RouteTable.Routes);
 
-            var module = new MvcExtensions.UI.Web.MvcExtensionsModule();
+            var wunp = new HttpUsernameProvider(RouteTable.Routes);
 
-            module.Register(GetDb());
+            var module = new MvcWebExtensionsModule();
+
+            module.Register(GetDb(wunp));
 
             module.Container.Register(
-                Component.For<IMvcCustomContainer<HomeController>>().ImplementedBy<HomeContainer>().LifeStyle.Transient
+                Component.For<IMvcCustomContainer<HomeController>>().ImplementedBy<HomeContainer>().LifeStyle.Transient,
+                Component.For<HttpUsernameProvider>().Instance(wunp)
             );
 
             ControllerBuilder.Current.DefaultNamespaces.Add("Tasks.Core.Controllers");

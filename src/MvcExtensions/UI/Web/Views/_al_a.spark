@@ -1,5 +1,0 @@
-<use namespace="MvcExtensions.UI.Web.Helpers" />
-<viewdata al="MvcExtensions.UI.ViewModel.VMActionLink">
-#if (al!=null) {
-!{Html.ActionLink(al)}
-#}

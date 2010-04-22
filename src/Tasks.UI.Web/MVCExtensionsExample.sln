@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks.UI.Web", "Tasks.UI.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks.UI.Winforms", "..\Tasks.UI.Winforms\Tasks.UI.Winforms.csproj", "{EDD147D0-786B-419F-AB8B-46A35732AB92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcExtensions.Web", "..\MvcExtensions.Web\MvcExtensions.Web.csproj", "{8ED63E29-15B0-4EE3-B049-455962878B9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{EDD147D0-786B-419F-AB8B-46A35732AB92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDD147D0-786B-419F-AB8B-46A35732AB92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDD147D0-786B-419F-AB8B-46A35732AB92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ED63E29-15B0-4EE3-B049-455962878B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ED63E29-15B0-4EE3-B049-455962878B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ED63E29-15B0-4EE3-B049-455962878B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ED63E29-15B0-4EE3-B049-455962878B9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

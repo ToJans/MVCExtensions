@@ -75,14 +75,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\FluentNHibernate\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\libs\MvcContrib\Microsoft.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="MvcContrib, Version=2.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\libs\MvcContrib\MvcContrib.dll</HintPath>
-    </Reference>
     <Reference Include="NHibernate, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\FluentNHibernate\NHibernate.dll</HintPath>
@@ -99,14 +91,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\Rhino.Security\Rhino.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Spark, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\libs\Spark\Spark.dll</HintPath>
-    </Reference>
-    <Reference Include="Spark.Web.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\libs\Spark\Spark.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -120,14 +104,6 @@
       <HintPath>..\..\libs\SqLite\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Abstractions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Routing">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -138,21 +114,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FNHModules\ConventionModule.cs" />
+    <Compile Include="FNHModules\EventHandlerModule.cs" />
+    <Compile Include="FNHModules\InterfaceMapModule.cs" />
+    <Compile Include="FNHModules\ModuleGroup.cs" />
+    <Compile Include="FNHModules\DefaultMvcExtensionsModules.cs" />
+    <Compile Include="FNHModules\MyText\MyTextModule.cs" />
+    <Compile Include="FNHModules\MyText\MyValidatedXlatTextInterfaceMap.cs" />
+    <Compile Include="FNHModules\CustomUserTypeModule.cs" />
+    <Compile Include="Model\DomainDefinition.cs" />
+    <Compile Include="Services\Impl\Converters\PassThroughConverter.cs" />
+    <Compile Include="FNHModules\AuditInfo\AuditInfoEventListener.cs" />
+    <Compile Include="FNHModules\AuditInfo\AuditInfoModule.cs" />
+    <Compile Include="FNHModules\AuditInfo\IUsernameProvider.cs" />
+    <Compile Include="FNHModules\IInterfaceMap.cs" />
+    <Compile Include="FNHModules\IFNHModule.cs" />
+    <Compile Include="FNHModules\VersionAware\IVersionAware.cs" />
     <Compile Include="Model\NestedSet.cs" />
     <Compile Include="Model\IModule.cs" />
     <Compile Include="Model\MyText.cs" />
     <Compile Include="Services\Dynamic.cs" />
-    <Compile Include="Services\Impl\FluentNHibernate\OverrideInterface.cs" />
-    <Compile Include="Services\Impl\FluentNHibernate\CascadeSaveOrUpdateConvention.cs" />
-    <Compile Include="Services\IDomainDefinition.cs" />
-    <Compile Include="Services\Impl\FluentNHibernate\MyTextAlteration.cs" />
-    <Compile Include="Services\Impl\FluentNHibernate\VersionFilterOverride.cs" />
+    <Compile Include="FNHModules\AuditInfo\IAuditInfo.cs" />
+    <Compile Include="FNHModules\VersionAware\IVersionProvider.cs" />
+    <Compile Include="FNHModules\VersionAware\VersionAwareEventListener.cs" />
+    <Compile Include="FNHModules\VersionAware\VersionAwareInterfaceMap.cs" />
+    <Compile Include="FNHModules\VersionAware\VersionAwareModule.cs" />
+    <Compile Include="FNHModules\Conventions\CascadeSaveOrUpdateConvention.cs" />
+    <Compile Include="Model\IDomainDefinition.cs" />
+    <Compile Include="FNHModules\MyText\MyTextConvention.cs" />
+    <Compile Include="FNHModules\VersionAware\VersionFilter.cs" />
+    <Compile Include="MvcExtensionsModule.cs" />
     <Compile Include="Services\Impl\TextGenerator.cs" />
     <Compile Include="Services\INestedSet.cs" />
     <Compile Include="Services\INHibernateRepository.cs" />
     <Compile Include="Services\ISecuredRepository.cs" />
-    <Compile Include="UI\Web\ActionFilters\SetCultureAttribute.cs" />
-    <Compile Include="UI\Web\Controller\ControllerExtensions.cs" />
     <Compile Include="Model\IModelId.cs" />
     <Compile Include="Services\IContextBound.cs" />
     <Compile Include="Services\IConverter.cs" />
@@ -162,37 +157,24 @@
     <Compile Include="Services\Impl\IOC.cs" />
     <Compile Include="Services\Impl\FluentNHibernate\Repository.cs" />
     <Compile Include="Services\Impl\FluentNHibernate\UnitOfWork.cs" />
-    <Compile Include="Services\Impl\Binders\HttpContextBoundObject.cs" />
-    <Compile Include="Services\Impl\NHibernateUserTypes\BitmapUserType.cs" />
-    <Compile Include="Services\Impl\NHibernateUserTypes\ColorUserType.cs" />
+    <Compile Include="FNHModules\CustomUserTypes\BitmapUserType.cs" />
+    <Compile Include="FNHModules\CustomUserTypes\ColorUserType.cs" />
     <Compile Include="Services\IUnitOfWork.cs" />
     <Compile Include="Services\IUnitOfWorkFactory.cs" />
-    <Compile Include="Services\IMvcChildContainer.cs" />
     <Compile Include="Services\IMvcContainer.cs" />
     <Compile Include="Services\IMapper.cs" />
     <Compile Include="Services\Impl\FakeRepository.cs" />
     <Compile Include="Services\Impl\MvcContainer.cs" />
     <Compile Include="Services\Impl\MvcMapper.cs" />
-    <Compile Include="Services\Impl\MvcContainerControllerFactory.cs" />
     <Compile Include="Services\IRepository.cs" />
-    <Compile Include="UI\Web\Controller\FlashInvalidModelStateAttribute.cs" />
-    <Compile Include="UI\Web\Helpers\CultureHelper.cs" />
-    <Compile Include="UI\Web\Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\ViewModel\VMActionLink.cs" />
-    <Compile Include="UI\Web\Helpers\IEnumerableHelper.cs" />
-    <Compile Include="UI\Web\Helpers\jqGridHelper.cs" />
-    <Compile Include="UI\Web\Helpers\UrlHelperExtensions.cs" />
-    <Compile Include="UI\Web\ModelBinders\MyTextModelBinder.cs" />
-    <Compile Include="UI\Web\MvcExtensionsModule.cs" />
+    <Compile Include="Model\VMActionLink.cs" />
+    <Compile Include="Helpers\IEnumerableHelper.cs" />
+    <Compile Include="Helpers\jqGridHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Services\Impl\LoremIpsum.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UI\Web\Views\_al_a.spark" />
-    <EmbeddedResource Include="UI\Web\Views\_al_form.spark" />
-    <EmbeddedResource Include="UI\Web\Views\_validation.spark" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

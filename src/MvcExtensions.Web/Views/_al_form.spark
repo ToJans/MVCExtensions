@@ -1,0 +1,12 @@
+<use namespace="MvcExtensions.Web.Helpers" />
+<use namespace="MvcExtensions.Model" />
+
+<viewdata al="VMActionLink" />
+#if (al!=null) {
+<form action="${Url.ActionLink(al)}" method="post"  enctype="multipart/form-data">
+<render />
+<if condition="!string.IsNullOrEmpty(al.Description)">
+    <input type="submit" value="${al.Description}" />
+</if>
+</form>
+#}

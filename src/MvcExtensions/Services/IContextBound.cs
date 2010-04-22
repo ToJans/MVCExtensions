@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MvcExtensions.Services
 {
-    public interface IContextBound<T> where T:new() 
+    public interface IContextBound<T> 
     {
         T ContextValue { get; set; }
     }

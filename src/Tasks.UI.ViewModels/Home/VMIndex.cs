@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MvcExtensions.UI.ViewModel;
+using MvcExtensions.Model;
 
 namespace Tasks.UI.ViewModels.Home
 {

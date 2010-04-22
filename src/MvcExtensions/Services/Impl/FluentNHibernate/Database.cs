@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using NHibernate;
-using FluentNHibernate;
+using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using FluentNHibernate.Automapping;
-using NHibernate.Tool.hbm2ddl;
-using FluentNHibernate.Mapping;
-using MvcExtensions.Services.Impl.NHibernateUserTypes;
 using MvcExtensions.Model;
+using NHibernate;
+using NHibernate.Tool.hbm2ddl;
 
 namespace MvcExtensions.Services.Impl.FluentNHibernate
 {
@@ -36,13 +31,10 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
             var  clsmaps = new DomainType[]{DomainType.Class,DomainType.ClassWithoutBaseClass};
             var cfg = Fluently.Configure()
                 .Database(pcfg)
-                .Mappings(m => {
+                .Mappings(m =>
+                {
                     var am1 = AutoMap.Assembly(mappings.DomainAssembly)
                         .Where(t => clsmaps.Contains(mappings.GetDomainType(t)))
-                        .Conventions.Add<BitmapUserTypeConvention>()
-                        .Conventions.Add<ColorUserTypeConvention>()
-                        .Conventions.Add<CascadeSaveOrUpdateConvention>()
-                        .Conventions.Add<MyTextTypeConvention>()
                        .Setup(c =>
                        {
                            c.IsComponentType = t => typeof(MyText).IsAssignableFrom(t) ||
@@ -53,22 +45,14 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                            {
                                return pi.Name;
                            };
-                       })
-                       .OverrideAll(pig =>
-                       {
-                           pig.IgnoreProperties(pi => pi.Name == "Value" &&
-                               typeof(MyValidatedXlatText).IsAssignableFrom(pi.MemberInfo.ReflectedType));
                        });
-                    var types = mappings.DomainAssembly.GetTypes().Where(x => 
-                                typeof(IVersionAware).IsAssignableFrom(x) && 
-                                mappings.GetDomainType(x) != DomainType.None);
-                    if (types.Count()>0)
+
+                    foreach (var mod in mappings.RegisteredModules)
+                        mod.Map(mappings, am1);
+
+                    am1.GetType().GetMethod("UseOverridesFromAssemblyOf").MakeGenericMethod(mappings.GetType()).Invoke(am1, null);
+                    am1.Alterations(a =>
                     {
-                        am1.OverrideInterface<IVersionAware,VersionAwareInterfaceMap>(types);
-                        am1.Add(new VersionFilter());
-                    }
-                    am1.GetType().GetMethod("UseOverridesFromAssemblyOf").MakeGenericMethod(mappings.GetType()).Invoke(am1,null);
-                    am1.Alterations(a => {
                         a.GetType().GetMethod("AddFromAssemblyOf").MakeGenericMethod(mappings.GetType()).Invoke(a, null);
                     });
                     m.AutoMappings.Add(am1);
@@ -82,8 +66,11 @@ namespace MvcExtensions.Services.Impl.FluentNHibernate
                             v.WriteMappingsTo(mappings.WriteHbmFilesToPath);
                         }
                     }
-                })
-                .BuildConfiguration();
+                }).ExposeConfiguration(c =>
+                {
+                    foreach (var mod in mappings.RegisteredModules)
+                        mod.Configure(c);
+                }).BuildConfiguration();
             SessionFactory = cfg.BuildSessionFactory();
             
             CreateDB = () =>

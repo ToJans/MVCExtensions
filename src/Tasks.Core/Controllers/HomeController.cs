@@ -6,7 +6,6 @@ using MvcExtensions.Model;
 using MvcExtensions.Services;
 using Tasks.Core.Model;
 using Tasks.UI.ViewModels.Home;
-using MvcExtensions.UI.Web.Controller;
 
 
 namespace Tasks.Core.Controllers

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace MvcExtensions.Services.Impl.Convertors
+namespace MvcExtensions.Services.Impl.Converters
 {
     public class GenericConverter<TFrom,TTo> : IConverter<TFrom,TTo>
     {

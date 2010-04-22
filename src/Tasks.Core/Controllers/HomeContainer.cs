@@ -4,8 +4,9 @@ using Tasks.Core.Controllers;
 using Tasks.UI.ViewModels.Home;
 using MvcExtensions.Services;
 using MvcExtensions.Services.Impl;
-using MvcExtensions.UI.Web.Controller;
+using MvcExtensions.Web.Helpers;
 using System.Web.Mvc;
+using MvcExtensions.Web.Services;
 
 namespace Tasks.Core.Controllers
 {

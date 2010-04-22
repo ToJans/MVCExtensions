@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MvcExtensions.UI.ViewModel;
+using MvcExtensions.Model;
 
 namespace Tasks.UI.ViewModels.Home
 {
