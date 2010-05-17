@@ -8,6 +8,17 @@ namespace MvcExtensions.Web.ActionFilterAttributes
 {
     public class SetCultureAttribute : FilterAttribute, IActionFilter
     {
+
+        public static IList<string> Cultures = new List<string>
+            {
+                "nl-NL"
+                ,"fr-FR"
+                ,"en-US"
+                ,"de-DE"
+                ,"pl-PL"
+            };
+
+
         public void OnActionExecuting(ActionExecutingContext
             filterContext)
         {
@@ -111,15 +122,6 @@ namespace MvcExtensions.Web.ActionFilterAttributes
         private static string SetCurrentLanguage(ActionExecutingContext
              filterContext)
         {
-            IList<string> Cultures = new List<string>
-            {
-                "nl-NL"
-                ,"fr-FR"
-                ,"en-US"
-                ,"de-DE"
-                ,"pl-PL"
-            };
-
             var x = filterContext.HttpContext.Request.Form["culture"];
             if (!string.IsNullOrEmpty(x))
             {
@@ -144,7 +146,7 @@ namespace MvcExtensions.Web.ActionFilterAttributes
                                                          filterContext,
                                                          Cultures);
                     return string.IsNullOrEmpty(BrowserCulture)
-                             ? "nl-NL"
+                             ? Cultures[0]
                              : BrowserCulture;
                 }
                 return SessionValue;

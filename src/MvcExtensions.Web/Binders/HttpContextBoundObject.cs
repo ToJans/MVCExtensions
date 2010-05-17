@@ -13,6 +13,7 @@ namespace MvcExtensions.Web.Binders
         RouteCollection Routes;
         IConverter<string, T> Converter;
         public double CookieLifetimeInDays = 365;
+        string localvalue = null;
 
 
         public string Name {get;set;}
@@ -21,7 +22,7 @@ namespace MvcExtensions.Web.Binders
         public HttpContextBoundObject(RouteCollection routes,IConverter<string,T> Converter)
         {
             this.Routes = routes;
-            this.Name = "___reg__" + typeof(T).FullName;
+            this.Name = "___reg___" + typeof(T).FullName;
             this.Converter = Converter;
         }
 
@@ -31,6 +32,8 @@ namespace MvcExtensions.Web.Binders
         {
             get
             {
+                if (localvalue != null)
+                    return Converter.Convert(localvalue);
                 string n = null;
                 var rd = Routes.GetRouteData(new HttpContextWrapper(HttpContext.Current));
                 if (rd.Values.ContainsKey(Name))
@@ -58,6 +61,7 @@ namespace MvcExtensions.Web.Binders
                     var c = new HttpCookie(Name, key);
                     c.Expires = DateTime.Now.AddDays(CookieLifetimeInDays);
                     HttpContext.Current.Response.Cookies.Set(c);
+                    localvalue = key;
                 }
                 else
                 {

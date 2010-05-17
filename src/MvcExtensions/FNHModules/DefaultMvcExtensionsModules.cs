@@ -14,5 +14,10 @@ namespace MvcExtensions.FNHModules
             Items.Add(new CustomUserTypesModule<CustomUserTypes.BitmapUserType>());
             Items.Add(new CustomUserTypesModule<CustomUserTypes.ColorUserType>());
         }
+
+        public DefaultMvcExtensionsModules(params IFNHModule[] extramodules):this()
+        {
+            base.Items.AddRange(extramodules);
+        }
     }
 }

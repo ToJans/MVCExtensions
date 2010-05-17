@@ -28,10 +28,9 @@ namespace MvcExtensions.FNHModules.VersionAware
             var v =entity as IVersionAware;
             if (v == null)
                 return false;
-            var cv = sVersionProvider.Version;
-            if (v.Version == cv)
+            if (v.Version != null)
                 return false;
-            v.Version = cv;
+            var cv = v.Version = sVersionProvider.Version;
             Set(persister, state, "Version", cv);
             return false;
         }

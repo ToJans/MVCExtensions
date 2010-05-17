@@ -7,6 +7,7 @@ using System.Web.Mvc.Html;
 using MvcExtensions.Services;
 using MvcExtensions.Model;
 using System.Web.Routing;
+using System.Linq.Dynamic;
 
 namespace MvcExtensions.Web.Helpers
 {
@@ -125,7 +126,7 @@ namespace MvcExtensions.Web.Helpers
         public int page {get;set;}
         public int rows {get;set;}
         public string sidx {get;set;}
-        public string sort { get; set; }
+        public string sord { get; set; }
         public bool _search { get; set; }
         public string searchField { get; set; }
         public string searchOper { get; set; }
@@ -136,7 +137,7 @@ namespace MvcExtensions.Web.Helpers
         {
             page = 1;
             rows = 10;
-            sort = "asc";
+            sord = "asc";
             _search = false;
         }
     }
@@ -188,41 +189,44 @@ namespace MvcExtensions.Web.Helpers
             return x;
         }
 
-        //public static IQueryable<T> FilterCriteria<T>(INHibernateRepository sRepo, IMjqGridPostBack pb) where T : class 
-        //{
-        //    return sRepo.Find<T>(s => {
-        //        if (pb._search)
-        //        {
-        //            switch (pb.searchOper)
-        //            {
-        //                //['bw','eq','ne','lt','le','gt','ge','ew','cn'] 
-        //                case "bw": s.Add(Expression.Like(pb.searchField, pb.searchString+"%")); break;
-        //                case "eq": s.Add(Expression.Eq(pb.searchField, pb.searchString)); break;
-        //                case "ne": s.Add(Expression.Not(Expression.Eq(pb.searchField, pb.searchString))); break;
-        //                case "lt": s.Add(Expression.Lt(pb.searchField, pb.searchString)); break;
-        //                case "le": s.Add(Expression.Le(pb.searchField, pb.searchString)); break;
-        //                case "gt": s.Add(Expression.Gt(pb.searchField, pb.searchString)); break;
-        //                case "ge": s.Add(Expression.Ge(pb.searchField, pb.searchString)); break;
-        //                case "ew": s.Add(Expression.Eq(pb.searchField, "%" + pb.searchString)); break;
-        //                case "cn": s.Add(Expression.Like(pb.searchField, "%" + pb.searchString + "%")); break;
-        //            }
-        //        }
-        //        if (!string.IsNullOrEmpty(pb.sidx))
-        //        {
-        //            if (pb.sort == "asc")
-        //                s.AddOrder(Order.Asc(pb.sidx));
-        //            else
-        //                s.AddOrder(Order.Desc(pb.sidx));
-        //        }
-        //    });
-        //}
+        public static IQueryable<T> FilterCriteria<T>(IQueryable <T> src, IMjqGridPostBack pb) where T : class
+        {
+            var op = "";
+            if (pb._search)
+            {
+                switch (pb.searchOper)
+                {
+                    //['bw','eq','ne','lt','le','gt','ge','ew','cn'] 
+                    case "bw": op = "{0}.ToString().StartsWith(@0)"; break;
+                    case "eq": op = "{0} = @0"; break;
+                    case "ne": op = "{0} != @0"; break;
+                    case "lt": op = "{0} < @0"; break;
+                    case "le": op = "{0} <= @0"; break;
+                    case "gt": op = "{0} > @0"; break;
+                    case "ge": op = "{0} >= @0"; break;
+                    case "ew": op = "{0}.ToString().EndsWith(@0)"; break;
+                    case "cn": op = "{0}.ToString().Contains(@0)"; break;
+                }
+                if (op != "")
+                    src = src.ToArray().AsQueryable().Where(string.Format(op, pb.searchField), pb.searchString);
+            }
+            if (!string.IsNullOrEmpty(pb.sidx))
+            {
+                if (op == "")
+                    src = src.ToArray().AsQueryable();
+                src = src.OrderBy(pb.sidx + " " + pb.sord);
+            }
+            return src;
+        }
 
         public static object GetData<T>(IQueryable<T> data, IMjqGridPostBack pb,Action<T> ModifyBeforeConversion) where T:class
         {
+            data = FilterCriteria(data, pb);
             var c = data.Count();
             var d =data.Skip((pb.page - 1) * pb.rows).Take(pb.rows).ToArray();
-            foreach (var it in d)
-                ModifyBeforeConversion(it);
+            if (ModifyBeforeConversion!=null)
+                foreach (var it in d)
+                    ModifyBeforeConversion(it);
             
             return new
             {

@@ -10,17 +10,16 @@ namespace MvcExtensions.FNHModules
     public class InterfaceMapModule<I,C> : IFNHModule
         where C : IInterfaceMap<I>, new()
     {
-        public bool HasMembers = false;
-
         public virtual void Map(IDomainDefinition domain, AutoPersistenceModel model)
         {
-            var types = domain.DomainAssembly.GetTypes().Where(x =>
-            typeof(I).IsAssignableFrom(x) &&
-            domain.GetDomainType(x) != DomainType.None);
+            var types = 
+                domain.DomainAssembly.GetTypes().Where(x =>typeof(I).IsAssignableFrom(x) 
+                        && (domain.GetDomainType(x) != DomainType.None))
+                      .Union(this.GetType().Assembly.GetTypes().Where(x=>typeof(I).IsAssignableFrom(x))
+                );
             if (types.Any())
             {
                 OverrideInterface(model,types);
-                HasMembers = true;
             }
         }
 

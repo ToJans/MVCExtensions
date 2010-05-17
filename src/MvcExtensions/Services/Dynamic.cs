@@ -1,7 +1,5 @@
 ﻿//Copyright (C) Microsoft Corporation.  All rights reserved.
 
-//source : http://msdn.microsoft.com/en-us/vcsharp/bb894665.aspx
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +9,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
 
-namespace MvcExtensions.Services
+namespace System.Linq.Dynamic
 {
     public static class DynamicQueryable
     {

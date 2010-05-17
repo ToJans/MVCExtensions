@@ -7,20 +7,16 @@ namespace MvcExtensions.FNHModules.VersionAware
 {
     public class VersionAwareModule : ModuleGroup 
     {
-        InterfaceMapModule<IVersionAware, VersionAwareInterfaceMap> imap;
-        
         public VersionAwareModule(IVersionProvider sVersionProvider)
         {
-            imap = new InterfaceMapModule<IVersionAware,VersionAwareInterfaceMap>();
-            Items.Add(imap);
+            Items.Add(new InterfaceMapModule<IVersionAware,VersionAwareInterfaceMap>());
             Items.Add(new EventHandlerModule(new VersionAwareEventListener(sVersionProvider)));
         }
 
-        public void Map(IDomainDefinition domain, AutoPersistenceModel model)
+        public override void Map(IDomainDefinition domain, AutoPersistenceModel model)
         {
             base.Map(domain, model);
-            if (imap.HasMembers)
-                model.Add(new VersionFilter());
+            model.Add(new VersionFilter());
         }
     }
 }

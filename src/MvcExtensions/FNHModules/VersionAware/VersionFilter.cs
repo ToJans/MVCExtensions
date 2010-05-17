@@ -7,23 +7,24 @@ namespace MvcExtensions.FNHModules.VersionAware
 
     public class VersionFilter : FilterDefinition
     {
-        public static readonly string FILTERNAME = "MyVersionFilter";
-        public static readonly string COLUMNNAME = "Version";
-        public static readonly string CONDITION = COLUMNNAME + " = :" + COLUMNNAME;
+        public static readonly string FilterName = "MyVersionFilter";
+        public static readonly string ParameterName = "Version";
+        public static readonly string Condition = 
+            string.Format("{0} IS NULL OR {0} = :{1}", VersionAwareInterfaceMap.ColumnName,ParameterName);
 
         public VersionFilter()
         {
-            WithName(FILTERNAME).WithCondition(CONDITION).AddParameter(COLUMNNAME, NHibernateUtil.String);
+            WithName(FilterName).WithCondition(Condition).AddParameter(ParameterName, NHibernateUtil.String);
         }
 
         public static void Enable(NHibernate.ISession session, string version)
         {
-            session.EnableFilter(FILTERNAME).SetParameter(COLUMNNAME, version);
+            session.EnableFilter(FilterName).SetParameter(ParameterName, version);
         }
 
         public static void Disable(NHibernate.ISession session)
         {
-            session.DisableFilter(FILTERNAME);
+            session.DisableFilter(FilterName);
         }
     }
 }

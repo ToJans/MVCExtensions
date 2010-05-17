@@ -108,7 +108,6 @@ namespace MvcExtensions.UI.Web.Helpers
         public JsonReader jsonReader = new JsonReader();
         public string editurl;
 
-
         public jqGridMetaData SetCol(Func<Colspec,bool> selector,Action<Colspec> c)
         {
             foreach(var v in colModel.Where(x=>selector(x)))
@@ -145,7 +144,7 @@ namespace MvcExtensions.UI.Web.Helpers
             var x = new jqGridMetaData() { 
                 caption = Caption,
                 url = dataurl,
-                editurl = editurl
+                editurl = editurl,
             };
             var l = new List<jqGridMetaData.Colspec>();
             var numbertypes = (new Type[] { typeof(int), typeof(decimal), typeof(double) });

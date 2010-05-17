@@ -122,7 +122,14 @@
     <Compile Include="FNHModules\MyText\MyTextModule.cs" />
     <Compile Include="FNHModules\MyText\MyValidatedXlatTextInterfaceMap.cs" />
     <Compile Include="FNHModules\CustomUserTypeModule.cs" />
+    <Compile Include="FNHModules\Searchable\ISearchable.cs" />
+    <Compile Include="FNHModules\Searchable\SearchableEventListener.cs" />
+    <Compile Include="FNHModules\Searchable\SearchableInterfaceMap.cs" />
+    <Compile Include="FNHModules\Searchable\IEnumerableExtensions.cs" />
+    <Compile Include="FNHModules\Searchable\SearchableModule.cs" />
+    <Compile Include="MeepMeep\ConventionViewModelBinder.cs" />
     <Compile Include="Model\DomainDefinition.cs" />
+    <Compile Include="Services\Dynamic.cs" />
     <Compile Include="Services\Impl\Converters\PassThroughConverter.cs" />
     <Compile Include="FNHModules\AuditInfo\AuditInfoEventListener.cs" />
     <Compile Include="FNHModules\AuditInfo\AuditInfoModule.cs" />
@@ -133,7 +140,6 @@
     <Compile Include="Model\NestedSet.cs" />
     <Compile Include="Model\IModule.cs" />
     <Compile Include="Model\MyText.cs" />
-    <Compile Include="Services\Dynamic.cs" />
     <Compile Include="FNHModules\AuditInfo\IAuditInfo.cs" />
     <Compile Include="FNHModules\VersionAware\IVersionProvider.cs" />
     <Compile Include="FNHModules\VersionAware\VersionAwareEventListener.cs" />
@@ -172,6 +178,7 @@
     <Compile Include="Model\VMActionLink.cs" />
     <Compile Include="Helpers\IEnumerableHelper.cs" />
     <Compile Include="Helpers\jqGridHelper.cs" />
+    <Compile Include="MeepMeep\_Interfaces.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Services\Impl\LoremIpsum.txt" />
